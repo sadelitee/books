@@ -24,6 +24,7 @@ set tailwind theme in admin panel (extension/theme)
 ```
 
 ## To do list
+
 - turn off/on pages
 - minifying css/js/html
 - webp images

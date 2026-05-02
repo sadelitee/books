@@ -3,100 +3,362 @@
 <!--[if IE 8 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie8"><![endif]-->
 <!--[if IE 9 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie9"><![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!-->
-<html dir="{{ direction }}" lang="{{ lang }}">
-<!--<![endif]-->
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>{{ title }}</title>
-{% if robots %}
-<meta name="robots" content="{{ robots }}" />
-{% endif %}
-<base href="{{ base }}" />
-{% if description %}
-<meta name="description" content="{{ description }}" />
-{% endif %}
-{% if keywords %}
-<meta name="keywords" content="{{ keywords }}" />
-{% endif %}
-<meta property="og:title" content="{{ title }}" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="{{ og_url }}" />
-{% if og_image %}
-<meta property="og:image" content="{{ og_image }}" />
-{% else %}
-<meta property="og:image" content="{{ logo }}" />
-{% endif %}
-<meta property="og:site_name" content="{{ name }}" />
-<script src="catalog/view/javascript/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
-<link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
-<script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-<link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css" />
-<link href="catalog/view/theme/default/stylesheet/stylesheet.css" rel="stylesheet">
-{% for style in styles %}
-<link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}" />
-{% endfor %}
-{% for script in scripts %}
-<script src="{{ script }}" type="text/javascript"></script>
-{% endfor %}
-<script src="catalog/view/javascript/common.js" type="text/javascript"></script>
-{% for link in links %}
-<link href="{{ link.href }}" rel="{{ link.rel }}" />
-{% endfor %}
-{% for analytic in analytics %}
-{{ analytic }}
-{% endfor %}
-</head>
-<body>
-<nav id="top">
-  <div class="container">{{ currency }}
-    {{ language }}
-	{{ blog_menu }}
-    <div id="top-links" class="nav pull-right">
-      <ul class="list-inline">
-        <li><a href="{{ contact }}"><i class="fa fa-phone"></i></a> <span class="hidden-xs hidden-sm hidden-md">{{ telephone }}</span></li>
-        <li class="dropdown"><a href="{{ account }}" title="{{ text_account }}" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_account }}</span> <span class="caret"></span></a>
-          <ul class="dropdown-menu dropdown-menu-right">
-            {% if logged %}
-            <li><a href="{{ account }}">{{ text_account }}</a></li>
-            <li><a href="{{ order }}">{{ text_order }}</a></li>
-            <li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
-            <li><a href="{{ download }}">{{ text_download }}</a></li>
-            <li><a href="{{ logout }}">{{ text_logout }}</a></li>
-            {% else %}
-            <li><a href="{{ register }}">{{ text_register }}</a></li>
-            <li><a href="{{ login }}">{{ text_login }}</a></li>
-            {% endif %}
-          </ul>
-        </li>
-        <li><a href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}"><i class="fa fa-heart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_wishlist }}</span></a></li>
-        <li><a href="{{ shopping_cart }}" title="{{ text_shopping_cart }}"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_shopping_cart }}</span></a></li>
-        <li><a href="{{ checkout }}" title="{{ text_checkout }}"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_checkout }}</span></a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-<header>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-4">
-		<div id="logo">
-          {% if logo %}
-            {% if home == og_url %}
-              <img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" />
-            {% else %}
-              <a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></a>
-            {% endif %}
-          {% else %}
-            <h1><a href="{{ home }}">{{ name }}</a></h1>
-          {% endif %}
+	<html
+	dir="{{ direction }}" lang="{{ lang }}"> <!--<![endif]-->
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>{{ title }}</title>
+		{% if robots %}
+			<meta name="robots" content="{{ robots }}"/>
+		{% endif %}
+		<base href="{{ base }}"/>
+		{% if description %}
+			<meta name="description" content="{{ description }}"/>
+		{% endif %}
+		{% if keywords %}
+			<meta name="keywords" content="{{ keywords }}"/>
+		{% endif %}
+		<meta property="og:title" content="{{ title }}"/>
+		<meta property="og:type" content="website"/>
+		<meta property="og:url" content="{{ og_url }}"/>
+		{% if og_image %}
+			<meta property="og:image" content="{{ og_image }}"/>
+		{% else %}
+			<meta property="og:image" content="{{ logo }}"/>
+		{% endif %}
+		<meta
+		property="og:site_name" content="{{ name }}"/>
+
+		<!-- Tailwind CSS CDN -->
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script>
+			tailwind.config = {
+theme: {
+extend: {
+colors: {
+brand: {
+pink: '#E8006A',
+'pink-hover': '#C4005A',
+purple: '#2D2A8C',
+'purple-hover': '#221F6E',
+light: '#F7F7F9',
+muted: '#6B6B7B',
+border: '#E4E4EF'
+}
+},
+fontFamily: {
+sans: ['"Nunito"', 'sans-serif']
+}
+}
+}
+}
+		</script>
+
+		<!-- Google Fonts: Nunito -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link
+		href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+		<!-- Font Awesome -->
+		<link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
+		{% for style in styles %}
+			<link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}"/>
+		{% endfor %}
+		{% for script in scripts %}
+			<script src="{{ script }}" type="text/javascript"></script>
+		{% endfor %}
+		{% for link in links %}
+			<link href="{{ link.href }}" rel="{{ link.rel }}"/>
+		{% endfor %}
+		{% for analytic in analytics %}
+			{{ analytic }}
+		{% endfor %}
+
+		<style>
+			body {
+				font-family: 'Nunito', sans-serif;
+			}
+
+			/* Top bar */
+			#top-bar {
+				background: #fff;
+				border-bottom: 1px solid #E4E4EF;
+			}
+
+			/* Logo area */
+			#logo img {
+				max-height: 44px;
+				width: auto;
+			}
+
+			/* Search */
+			#search-bar input:focus {
+				outline: none;
+				box-shadow: 0 0 0 2px #E8006A33;
+			}
+
+			/* Catalog button */
+			#btn-catalog {
+				transition: background 0.15s;
+			}
+			#btn-catalog:hover {
+				background: #221F6E;
+			}
+
+			/* Cart button */
+			#cart-btn {
+				transition: background 0.15s;
+			}
+			#cart-btn:hover {
+				background: #C4005A;
+			}
+
+			/* Dropdown */
+			.dropdown-menu {
+				display: none;
+			}
+			.dropdown:hover .dropdown-menu,
+			.dropdown:focus-within .dropdown-menu {
+				display: block;
+			}
+
+			/* Mobile menu toggle */
+			#mobile-menu {
+				display: none;
+			}
+			#mobile-menu.open {
+				display: block;
+			}
+
+			/* Sticky header */
+			header {
+				position: sticky;
+				top: 0;
+				z-index: 100;
+			}
+		</style>
+	</head>
+	<body
+		class="bg-brand-light text-gray-800">
+
+		<!-- ========================================================
+		     TOP BAR — phone, account, wishlist, cart, checkout links
+		     ======================================================== -->
+		<div id="top-bar" class="hidden lg:block">
+			<div class="container mx-auto max-w-7xl px-4">
+				<div
+					class="flex items-center justify-between h-10 text-sm text-brand-muted">
+
+					<!-- Left: currency & language switchers passed from OC controller -->
+					<div class="flex items-center gap-4">
+						{{ currency }}
+						{{ language }}
+						{% if blog_menu %}
+							<span class="text-brand-border">|</span>
+							{{ blog_menu }}
+						{% endif %}
+					</div>
+
+					<!-- Right: utility links -->
+					<div
+						class="flex items-center gap-5">
+
+						<!-- Phone -->
+						<a href="{{ contact }}" class="flex items-center gap-1.5 hover:text-brand-pink transition-colors">
+							<i class="fa fa-phone text-xs"></i>
+							<span>{{ telephone }}</span>
+						</a>
+
+						<!-- Account dropdown -->
+						<div class="dropdown relative">
+							<a href="{{ account }}" class="flex items-center gap-1.5 hover:text-brand-pink transition-colors dropdown-toggle cursor-pointer select-none">
+								<i class="fa fa-user text-xs"></i>
+								<span>{{ text_account }}</span>
+								<i class="fa fa-caret-down text-xs ml-0.5"></i>
+							</a>
+							<ul class="dropdown-menu absolute right-0 top-full mt-1 bg-white border border-brand-border rounded-xl shadow-lg py-1 min-w-[180px] z-50">
+								{% if logged %}
+									<li>
+										<a href="{{ account }}" class="block px-4 py-2 text-sm hover:bg-brand-light hover:text-brand-pink transition-colors">{{ text_account }}</a>
+									</li>
+									<li>
+										<a href="{{ order }}" class="block px-4 py-2 text-sm hover:bg-brand-light hover:text-brand-pink transition-colors">{{ text_order }}</a>
+									</li>
+									<li>
+										<a href="{{ transaction }}" class="block px-4 py-2 text-sm hover:bg-brand-light hover:text-brand-pink transition-colors">{{ text_transaction }}</a>
+									</li>
+									<li>
+										<a href="{{ download }}" class="block px-4 py-2 text-sm hover:bg-brand-light hover:text-brand-pink transition-colors">{{ text_download }}</a>
+									</li>
+									<li><hr class="my-1 border-brand-border"></li>
+									<li>
+										<a href="{{ logout }}" class="block px-4 py-2 text-sm hover:bg-brand-light hover:text-brand-pink transition-colors">{{ text_logout }}</a>
+									</li>
+								{% else %}
+									<li>
+										<a href="{{ register }}" class="block px-4 py-2 text-sm hover:bg-brand-light hover:text-brand-pink transition-colors">{{ text_register }}</a>
+									</li>
+									<li>
+										<a href="{{ login }}" class="block px-4 py-2 text-sm hover:bg-brand-light hover:text-brand-pink transition-colors">{{ text_login }}</a>
+									</li>
+								{% endif %}
+							</ul>
+						</div>
+
+						<!-- Wishlist -->
+						<a href="{{ wishlist }}" id="wishlist-total" class="flex items-center gap-1.5 hover:text-brand-pink transition-colors" title="{{ text_wishlist }}">
+							<i class="fa fa-heart text-xs"></i>
+							<span>{{ text_wishlist }}</span>
+						</a>
+
+						<!-- Checkout -->
+						<a href="{{ checkout }}" class="flex items-center gap-1.5 hover:text-brand-pink transition-colors" title="{{ text_checkout }}">
+							<i class="fa fa-share text-xs"></i>
+							<span>{{ text_checkout }}</span>
+						</a>
+
+					</div>
+				</div>
+			</div>
 		</div>
-      </div>
-      <div class="col-sm-5">{{ search }}</div>
-      <div class="col-sm-3">{{ cart }}</div>
-    </div>
-  </div>
-</header>
-{{ menu }}
+
+		<!-- ========================================================
+		     MAIN HEADER — logo, catalog button, search, cart
+		     ======================================================== -->
+		<header class="bg-white border-b border-brand-border shadow-sm">
+			<div class="container mx-auto max-w-7xl px-4">
+				<div
+					class="flex items-center gap-4 h-[70px]">
+
+					<!-- Mobile hamburger -->
+					<button class="lg:hidden flex-shrink-0 text-brand-purple p-2 rounded-lg hover:bg-brand-light transition-colors" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Меню">
+						<i class="fa fa-bars text-xl"></i>
+					</button>
+
+					<!-- Logo -->
+					<div id="logo" class="flex-shrink-0">
+						{% if logo %}
+							{% if home == og_url %}
+								<img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="max-h-11 w-auto"/>
+							{% else %}
+								<a href="{{ home }}">
+									<img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="max-h-11 w-auto"/>
+								</a>
+							{% endif %}
+						{% else %}
+							<a href="{{ home }}" class="text-2xl font-extrabold text-brand-purple tracking-tight">{{ name }}</a>
+						{% endif %}
+					</div>
+
+					<!-- Catalog button (desktop) -->
+					<button id="btn-catalog" class="hidden lg:flex items-center gap-2 bg-brand-purple text-white font-semibold text-sm px-5 py-2.5 rounded-xl flex-shrink-0 transition-colors" onclick="document.getElementById('catalog-drawer').classList.toggle('open')" aria-label="Каталог">
+						<i class="fa fa-list-ul text-sm"></i>
+						<span>Каталог</span>
+					</button>
+
+					<!-- Search bar — OpenCart renders {{ search }} here;
+					           replace the inner div with OC's search module output -->
+					<div class="flex-1 flex items-center">
+						<div class="w-full flex rounded-xl border border-brand-border overflow-hidden focus-within:border-brand-purple transition-colors bg-brand-light">
+							<input id="search-bar" type="text" name="search" placeholder="Пошук книг, авторів, видавництв..." class="flex-1 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder-brand-muted border-none outline-none" autocomplete="off"/>
+							<button class="bg-brand-purple hover:bg-brand-purple-hover text-white px-5 font-semibold text-sm transition-colors flex-shrink-0" onclick="doSearch()">
+								Пошук
+							</button>
+						</div>
+						{# If you prefer OpenCart's built-in search widget, replace the block above with: {{ search }} #}
+					</div>
+
+					<!-- Cart — OpenCart renders {{ cart }} here;
+					           the block below is a styled wrapper / fallback -->
+					<div class="flex-shrink-0">
+						<a href="{{ shopping_cart }}" id="cart-btn" class="flex items-center gap-2 bg-brand-pink hover:bg-brand-pink-hover text-white font-semibold text-sm px-5 py-2.5 rounded-xl transition-colors" title="{{ text_shopping_cart }}">
+							<i class="fa fa-shopping-cart text-base"></i>
+							<span class="hidden sm:inline">Кошик</span>
+						</a>
+						{# To use OC's dynamic cart widget instead, replace <a>…</a> above with: {{ cart }} #}
+					</div>
+
+					<!-- Account icon (mobile only) -->
+					<a href="{{ account }}" class="lg:hidden flex-shrink-0 text-brand-purple p-2 rounded-lg hover:bg-brand-light transition-colors" title="{{ text_account }}">
+						<i class="fa fa-user text-xl"></i>
+					</a>
+
+				</div>
+			</div>
+
+			<!-- Mobile search bar -->
+			<div class="lg:hidden border-t border-brand-border px-4 py-3 bg-white">
+				<div class="flex rounded-xl border border-brand-border overflow-hidden bg-brand-light">
+					<input type="text" placeholder="Пошук..." class="flex-1 bg-transparent px-4 py-2.5 text-sm placeholder-brand-muted outline-none"/>
+					<button class="bg-brand-purple text-white px-4 text-sm font-semibold">
+						<i class="fa fa-search"></i>
+					</button>
+				</div>
+			</div>
+		</header>
+
+		<!-- ========================================================
+		     NAVIGATION MENU — OpenCart renders {{ menu }} here
+		     Below is the styled wrapper; actual links come from menu module
+		     ======================================================== -->
+		<nav class="bg-white border-b border-brand-border hidden lg:block">
+			<div class="container mx-auto max-w-7xl px-4">
+				{{ menu }}
+				{# The menu module output will be injected above.
+				       Style it via catalog/view/theme/your-theme/stylesheet/stylesheet.css
+				       targeting #menu .nav > li > a, etc. #}
+			</div>
+		</nav>
+
+		<!-- ========================================================
+		     MOBILE MENU DRAWER
+		     ======================================================== -->
+		<div id="mobile-menu" class="lg:hidden bg-white border-b border-brand-border">
+			<div class="px-4 py-3 space-y-1 text-sm font-semibold text-gray-700">
+				{{ menu }}
+			</div>
+		</div>
+
+		<!-- ========================================================
+		     OPTIONAL: Catalog sidebar drawer (desktop)
+		     Fill with OC category tree module output
+		     ======================================================== -->
+		<div id="catalog-drawer" style="display:none" class="hidden fixed top-[140px] left-0 z-[200] w-72 bg-white border border-brand-border rounded-r-2xl shadow-xl p-4 max-h-[80vh] overflow-y-auto">
+			<p class="text-xs font-bold uppercase tracking-widest text-brand-muted mb-3">Категорії</p>
+			{# Insert OC category list module here #}
+		</div>
+
+		<script>
+			// Simple search redirect — adjust to your store's search route
+function doSearch() {
+var q = document.getElementById('search-bar').value.trim();
+if (q) 
+window.location.href = 'index.php?route=product/search&search=' + encodeURIComponent(q);
+
+}
+document.getElementById('search-bar').addEventListener('keydown', function (e) {
+if (e.key === 'Enter') 
+doSearch();
+
+});
+
+// Catalog drawer toggle
+var drawer = document.getElementById('catalog-drawer');
+if (drawer) {
+document.addEventListener('click', function (e) {
+if (! drawer.contains(e.target) && !document.getElementById('btn-catalog').contains(e.target)) {
+drawer.style.display = 'none';
+}
+});
+document.getElementById('btn-catalog').addEventListener('click', function (e) {
+e.stopPropagation();
+drawer.style.display = drawer.style.display === 'none' ? 'block' : 'none';
+});
+}
+		</script>
+	</body>
+</html>

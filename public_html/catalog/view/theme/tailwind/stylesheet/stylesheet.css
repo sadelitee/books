@@ -81,7 +81,7 @@
 
     .button-primary:not(.icon) {
         @apply flex justify-center items-center gap-2 px-6 py-2 rounded-xs transition-colors cursor-pointer
-      bg-neutral-900 text-white hover:bg-neutral-700
+      bg-primary-900 text-white hover:bg-neutral-700
       dark:bg-white dark:text-black dark:hover:bg-neutral-200;
     }
 
@@ -143,6 +143,10 @@
 
     .badge[data-variant='primary'] {
         @apply bg-primary-500;
+    }
+
+    .badge[data-size='small'] {
+        @apply w-4 h-4 min-w-4 text-[11px] pb-0.5;
     }
 
     /* BADGES */
@@ -609,4 +613,10 @@
     }
 
     /* SYSTEM */
+
+    /* AK updates */
+
+    html {
+        overflow-y: scroll;
+    }
 }

@@ -1,13 +1,11 @@
-<button class="button-primary icon relative" id="cart-button" onclick="openCart()">
-	<svg aria-hidden="true" viewbox="0 0 24 24">
-		<use href="/assets/icons/sprite.svg#icon-cart"></use>
-	</svg>
-	<span id="cart-badge" class="badge button-badge">{{ productCount }}</span>
+<button class="button-secondary icon relative" id="cart-button" onclick="openCart()">
+	<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewbox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 11l-1 9m5-9l-4-7M2 11h20M3.5 11l1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4M4.5 15.5h15M5 11l4-7m0 7l1 9"/></svg>
+	<span id="cart-badge" class="badge absolute top-1 right-1 translate-x-1/4 -translate-y-1/4" data-size="small">{{ productCount }}</span>
 	<div class="cart-toast" id="cart-toast"></div>
 </button>
 
-<div class="modal flex flex-col max-h-md h-full hidden p-4 md:p-6 max-md:rounded-none lg:max-h-[80vh] gap-4 justify-between" id="cart-modal">
-	<div class="modal-header">
+<div class="sheet p-4" data-side="right" id="cart-modal">
+	<div class="sheet-header">
 		<p class="heading">{{ text_cart }}</p>
 		<button class="button-secondary icon" onclick="closeCart()">
 			<svg aria-hidden="true" viewbox="0 0 24 24">
@@ -15,19 +13,19 @@
 			</svg>
 		</button>
 	</div>
+	<div class="sheet-content">
+		<div class="flex-1" id="cart-modal-products">
+			<div class="skeleton h-full w-full"></div>
+		</div>
 
-	<div class="flex-1" id="cart-modal-products">
-		<div class="skeleton h-full w-full"></div>
+		<div id="cart-modal-totals">
+			<div class="skeleton h-25 w-full rounded-md"></div>
+		</div>
 	</div>
-
-	<div id="cart-modal-totals">
-		<div class="skeleton h-25 w-full rounded-md"></div>
-	</div>
-
-	<div class="flex justify-end gap-2" class="modal-footer">
-		<button class="button-primary">
+	<div class="flex justify-end gap-2 sheet-footer">
+		<button class="button-primary w-full">
 			{{ text_checkout }}
 		</button>
 	</div>
 </div>
-<div class="modal-overlay hidden" id="cart-overlay" onclick="closeCart()"></div>
+<div class="sheet-overlay hidden" id="cart-overlay" onclick="closeCart()"></div>

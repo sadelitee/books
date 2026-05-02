@@ -1,6 +1,8 @@
 <?php
-class ControllerCommonFileManager extends Controller {
-	public function index() {
+class ControllerCommonFileManager extends Controller
+{
+	public function index()
+	{
 		$this->load->language('common/filemanager');
 
 		// Find which protocol to use to pass the full image link back
@@ -18,7 +20,7 @@ class ControllerCommonFileManager extends Controller {
 
 		// Make sure we have the correct directory
 		if (isset($this->request->get['directory'])) {
-            $directory = rtrim(DIR_IMAGE . 'catalog/' . trim(str_replace('*', '', $this->request->get['directory']), '/'), '/');
+			$directory = rtrim(DIR_IMAGE . 'catalog/' . trim(str_replace('*', '', $this->request->get['directory']), '/'), '/');
 		} else if (!empty($this->session->data['file_manager_directory'])) {
 			$directory = $this->session->data['file_manager_directory'];
 		} else {
@@ -57,7 +59,7 @@ class ControllerCommonFileManager extends Controller {
 			}
 
 			// Get files
-			$files = glob($directory . '/' . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE);
+			$files = glob($directory . '/' . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,SVG,svg,PNG,GIF}', GLOB_BRACE);
 
 			if (!$files) {
 				$files = array();
@@ -200,13 +202,15 @@ class ControllerCommonFileManager extends Controller {
 		$this->response->setOutput($this->load->view('common/filemanager', $data));
 	}
 
-    // FIX: basename not work with UTF-8 multibyte names
-    private function basename_fixed($path) {
-        $path_part = explode('/', $path);
-        return array_pop($path_part);
-    }
+	// FIX: basename not work with UTF-8 multibyte names
+	private function basename_fixed($path)
+	{
+		$path_part = explode('/', $path);
+		return array_pop($path_part);
+	}
 
-	public function upload() {
+	public function upload()
+	{
 		$this->load->language('common/filemanager');
 
 		$json = array();
@@ -259,7 +263,8 @@ class ControllerCommonFileManager extends Controller {
 						'jpg',
 						'jpeg',
 						'gif',
-						'png'
+						'png',
+						'svg'
 					);
 
 					if (!in_array(utf8_strtolower(utf8_substr(strrchr($filename, '.'), 1)), $allowed)) {
@@ -272,7 +277,8 @@ class ControllerCommonFileManager extends Controller {
 						'image/pjpeg',
 						'image/png',
 						'image/x-png',
-						'image/gif'
+						'image/gif',
+						'image/svg+xml'
 					);
 
 					if (!in_array($file['type'], $allowed)) {
@@ -305,7 +311,8 @@ class ControllerCommonFileManager extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function folder() {
+	public function folder()
+	{
 		$this->load->language('common/filemanager');
 
 		$json = array();
@@ -355,7 +362,8 @@ class ControllerCommonFileManager extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function delete() {
+	public function delete()
+	{
 		$this->load->language('common/filemanager');
 
 		$json = array();
@@ -390,7 +398,7 @@ class ControllerCommonFileManager extends Controller {
 				if (is_file($path)) {
 					unlink($path);
 
-				// If path is a directory beging deleting each file and sub folder
+					// If path is a directory beging deleting each file and sub folder
 				} elseif (is_dir($path)) {
 					$files = array();
 
@@ -420,7 +428,7 @@ class ControllerCommonFileManager extends Controller {
 						if (is_file($file)) {
 							unlink($file);
 
-						// If directory use the remove directory function
+							// If directory use the remove directory function
 						} elseif (is_dir($file)) {
 							rmdir($file);
 						}

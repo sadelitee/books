@@ -1,11 +1,11 @@
 // Language
 
-$('#form-language .dropdown-item').on('click', function(e) {
-  e.preventDefault();
+$('#form-language .dropdown-item').on('click', function (e) {
+    e.preventDefault();
 
-  $('#form-language input[name="code"]').val($(this).attr('name'));
+    $('#form-language input[name="code"]').val($(this).attr('name'));
 
-  $('#form-language').submit();
+    $('#form-language').submit();
 });
 
 // Language
@@ -47,13 +47,13 @@ $('.dropdown-menu').on('click', function (e) {
 // Utils
 
 function debounce(func, wait) {
-  let timeout;
-  return function () {
-      const context = this,
-          args = arguments;
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func.apply(context, args), wait);
-  };
+    let timeout;
+    return function () {
+        const context = this,
+            args = arguments;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), wait);
+    };
 }
 
 // Utils
@@ -69,15 +69,15 @@ const cartOverlay = $('#cart-overlay');
 let cartToastTimeout = null;
 
 function openCart() {
-  cartModal.removeClass('hidden');
-  cartOverlay.removeClass('hidden');
-  $('body').addClass('overflow-hidden');
+    cartModal.addClass('open');
+    cartOverlay.removeClass('hidden');
+    $('body').addClass('overflow-hidden');
 
-  $.ajax({
-      url: 'index.php?route=common/cart/info',
-      cache: false,
-      beforeSend: function () {
-        cartProducts.html(`
+    $.ajax({
+        url: 'index.php?route=common/cart/info',
+        cache: false,
+        beforeSend: function () {
+            cartProducts.html(`
           <div class="space-y-2">
               <div class="skeleton h-25 w-full rounded-md"></div>
               <div class="skeleton h-25 w-full rounded-md"></div>
@@ -85,24 +85,24 @@ function openCart() {
               <div class="skeleton h-25 w-full rounded-md"></div>
           </div>
         `);
-        cartTotals.html(`
+            cartTotals.html(`
             <div class="space-y-2">
                 <div class="skeleton h-25 w-full rounded-md"></div>
             </div>
         `);
-      },
-      success: function (html) {
-        const response = $(html);
-        cartTotals.html(response.filter('#cart-modal-totals').html());
-        cartProducts.html(response.filter('#cart-modal-products').html());
-      },
-  });
+        },
+        success: function (html) {
+            const response = $(html);
+            cartTotals.html(response.filter('#cart-modal-totals').html());
+            cartProducts.html(response.filter('#cart-modal-products').html());
+        },
+    });
 }
 
 function closeCart() {
-  cartModal.addClass('hidden');
-  cartOverlay.addClass('hidden');
-  $('body').removeClass('overflow-hidden');
+    cartModal.removeClass('open');
+    cartOverlay.addClass('hidden');
+    $('body').removeClass('overflow-hidden');
 }
 
 function addToCart(product_id, quantity = 1, button) {
@@ -144,7 +144,7 @@ function removeCartProduct(productKey) {
         data: `key=${productKey}`,
         cache: false,
         beforeSend: function () {
-          cartProducts.html(`
+            cartProducts.html(`
             <div class="space-y-2">
                 <div class="skeleton h-25 w-full rounded-md"></div>
                 <div class="skeleton h-25 w-full rounded-md"></div>
@@ -152,17 +152,17 @@ function removeCartProduct(productKey) {
                 <div class="skeleton h-25 w-full rounded-md"></div>
             </div>
           `);
-          cartTotals.html(`
+            cartTotals.html(`
               <div class="space-y-2">
                   <div class="skeleton h-25 w-full rounded-md"></div>
               </div>
           `);
         },
         success: function (json) {
-          const response = $(json['html']);
-          cartBadge.text(json['total']);
-          cartTotals.html(response.filter('#cart-modal-totals').html());
-          cartProducts.html(response.filter('#cart-modal-products').html());
+            const response = $(json['html']);
+            cartBadge.text(json['total']);
+            cartTotals.html(response.filter('#cart-modal-totals').html());
+            cartProducts.html(response.filter('#cart-modal-products').html());
         },
     });
 }
@@ -246,6 +246,36 @@ function closeMenu() {
 }
 
 // Menu
+
+// dropdown
+
+document.querySelectorAll('[data-type="hover"]').forEach(function (wrapper) {
+    const panel = wrapper.querySelector('[data-panel]');
+
+    const open = () => {
+        panel.classList.remove('opacity-0', 'scale-y-90', 'pointer-events-none');
+        panel.classList.add('opacity-100', 'scale-y-100');
+    };
+
+    const close = () => {
+        panel.classList.add('opacity-0', 'scale-y-90', 'pointer-events-none');
+        panel.classList.remove('opacity-100', 'scale-y-100');
+    };
+
+    // Desktop — hover
+    wrapper.addEventListener('mouseenter', open);
+    wrapper.addEventListener('mouseleave', close);
+
+    // Mobile — click
+    wrapper.addEventListener('click', function (e) {
+        const isOpen = !panel.classList.contains('opacity-0');
+        isOpen ? close() : open();
+        e.stopPropagation();
+    });
+
+    // Закрыть при клике мимо
+    document.addEventListener('click', close);
+});
 
 // Collapse Text
 
