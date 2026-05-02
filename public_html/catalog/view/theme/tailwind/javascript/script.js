@@ -277,6 +277,28 @@ document.querySelectorAll('[data-type="hover"]').forEach(function (wrapper) {
     document.addEventListener('click', close);
 });
 
+// search
+
+$('#searchButton').on('click', function () {
+    const searchValue = $('#searchInput').val();
+
+    // const langMatch = window.location.pathname.match(/^\/(ua|ru|en)(\/|$)/);
+
+    // const langPrefix = langMatch ? `/${langMatch[1]}/` : '/';
+
+    let url = `search`;
+
+    if (searchValue) url += `?search=${encodeURIComponent(searchValue)}`;
+
+    location.href = url;
+});
+
+$('#searchInput').on('keydown', function (e) {
+    if (e.key === 'Enter') {
+        $('#searchButton').trigger('click');
+    }
+});
+
 // Collapse Text
 
 $(function () {
