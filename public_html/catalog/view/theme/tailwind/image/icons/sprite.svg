@@ -74,6 +74,13 @@
     </g>
   </symbol>
 
+  <symbol viewBox="0 0 24 24" id="lucide-badge-check">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77a4 4 0 0 1 6.74 0a4 4 0 0 1 4.78 4.78a4 4 0 0 1 0 6.74a4 4 0 0 1-4.77 4.78a4 4 0 0 1-6.75 0a4 4 0 0 1-4.78-4.77a4 4 0 0 1 0-6.76"></path><path d="m9 12l2 2l4-4">
+    </path>
+    </g>
+  </symbol>
+
+
   <symbol id="icon-list" viewBox="0 0 24 24">
     <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
       <rect width="7" height="7" x="3" y="3" rx="1"/>

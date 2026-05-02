@@ -24,7 +24,7 @@ class ControllerCommonCart extends Controller
     );
 
     $data['products'] = [];
-    $data['productCount'] = $this->cart->countProducts();
+    $data['productCount'] = $this->cart->countProducts() == 0 ? "" : $this->cart->countProducts();
     foreach ($this->cart->getProducts() as $product) {
       $image = $this->model_tool_image->resize($product['image'] ?? 'placeholder.png', $imageWidth, $imageHeight);
       $priceFormatted = $this->currency->format($product['price'], $currency);
@@ -78,7 +78,7 @@ class ControllerCommonCart extends Controller
     );
 
     $data['products'] = [];
-    $data['productCount'] = $this->cart->countProducts();
+    $data['productCount'] = $this->cart->countProducts() == 0 ? "" : $this->cart->countProducts();
     foreach ($this->cart->getProducts() as $product) {
       $image = $this->model_tool_image->resize($product['image'] ?? 'placeholder.png', $imageWidth, $imageHeight);
       $priceFormatted = $this->currency->format($product['price'], $currency);
@@ -128,14 +128,10 @@ class ControllerCommonCart extends Controller
     $quantity = (int) ($this->request->post['quantity'] ?? 1);
     $this->cart->add($this->request->post['product_id'], $quantity);
 
-    $json['success'] = sprintf(
-      $this->language->get('text_success'),
-      $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']),
-      $product_info['name'],
-      $this->url->link('checkout/cart'),
-    );
+    $json['success'] = $this->language->get('text_success');
 
-    $json['total'] = $this->cart->countProducts();
+    $json['total'] = $this->cart->countProducts() == 0 ? "" : $this->cart->countProducts();
+
 
     $this->response->addHeader('Content-Type: application/json');
     $this->response->setOutput(json_encode($json));
@@ -185,7 +181,7 @@ class ControllerCommonCart extends Controller
       unset($this->session->data['reward']);
     }
 
-    $json['total'] = $this->cart->countProducts();
+    $json['total'] = $this->cart->countProducts() == 0 ? "" : $this->cart->countProducts();
     $json['html'] = $this->renderCartModal();
 
     $this->response->addHeader('Content-Type: application/json');

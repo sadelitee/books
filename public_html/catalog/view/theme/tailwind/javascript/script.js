@@ -127,15 +127,61 @@ function addToCart(product_id, quantity = 1, button) {
             // $('#cart-toast').html(json['totalPrice']);
             // $('#cart-toast').addClass('show');
 
-            // if (cartToastTimeout) clearTimeout(cartToastTimeout);
-            // cartToastTimeout = setTimeout(function () {
-            //     $('#cart-toast').removeClass('show');
-            //     cartToastTimeout = null;
-            // }, 2500);
-            // sendToast({ message: json['success'], type: 'success', align: 'right-bottom', timeout: 4000 });
+            if (cartToastTimeout) clearTimeout(cartToastTimeout);
+            cartToastTimeout = setTimeout(function () {
+                $('#cart-toast').removeClass('show');
+                cartToastTimeout = null;
+            }, 2500);
+            sendToast({ message: json['success'], type: 'success', align: 'right-bottom', timeout: 4000 });
         },
     });
 }
+
+// toast
+
+function sendToast({ message = 'Success!', type = 'success', align = 'right-top', timeout = 2500 }) {
+    const toast = document.getElementById('toast');
+    const icon = document.getElementById('toast-icon');
+    const msg = toast.querySelector('.toast-message');
+
+    const icons = {
+        success: '/assets/icons/sprite.svg#lucide-badge-check',
+        error: '#icon-x',
+        warning: '#icon-alert-triangle',
+    };
+
+    toast.setAttribute('data-type', type);
+    toast.setAttribute('data-align', align);
+    msg.textContent = message;
+    icon.setAttribute('href', icons[type] || icons.success);
+
+    toast.classList.remove('hidden', 'animate-out');
+    toast.classList.add('show', 'animate-in');
+
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(() => {
+        toast.classList.remove('animate-in');
+        toast.classList.add('animate-out');
+
+        setTimeout(() => {
+            toast.classList.remove('show');
+            toast.classList.add('hidden');
+        }, 200);
+    }, timeout);
+}
+
+function closeToast() {
+    const toast = document.getElementById('toast');
+    toast.classList.remove('animate-in');
+    toast.classList.add('animate-out');
+
+    setTimeout(() => {
+        toast.classList.remove('show');
+        toast.classList.add('hidden');
+    }, 200);
+}
+
+// toast
 
 function removeCartProduct(productKey) {
     $.ajax({

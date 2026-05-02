@@ -1,16 +1,27 @@
 <!DOCTYPE html>
 <html dir="{{ direction }}" lang="{{ lang }}" class="{{ theme }}">
-    <head>
-        {{ head }}
-        {{ microdata.head }}
-    </head>
-    <body>
-        {{ header }}
+	<head></head>
+{{ head }}
+{{ microdata.head }}</head><body>
 
-        {{ content }}
 
-        {{ footer }}
+{# cart toast #}
 
-        {{ microdata.body }}
-    </body>
-</html>
+<div id="toast" class="toast hidden" data-align="right-top" data-type="success">
+	<div class="toast-content">
+		<svg class="toast-icon" viewbox="0 0 24 24" aria-hidden="true">
+			<use id="toast-icon" href="#icon-check"></use>
+		</svg> 
+		<div class="toast-message"></div> 
+		<button class="toast-close" onclick="closeToast()">×</button>
+	</div>
+</div>
+
+
+{{ header }}
+
+{{ content }}
+
+{{ footer }}
+
+{{ microdata.body }}</body></html>
