@@ -1,6 +1,14 @@
-<div id="search" class="flex border border-gray-300 rounded-xl items-stretch overflow-hidden">
+{# <div id="search" class="flex border border-gray-300 rounded-xl items-stretch overflow-hidden">
 	<input id="searchInput" type="text" name="search" value="{{ search }}" placeholder="{{ text_search }}" class="input border-none bg-transparent"/>
 	<button type="button" id="searchButton" class="button-secondary border-l rounded-none border-gray-300">
+		<svg aria-hidden="true" viewbox="0 0 24 24">
+			<use href="/assets/icons/sprite.svg#icon-search"></use>
+		</svg>
+	</button>
+</div> #}
+<div id="search" class="flex border border-gray-300 rounded-xl items-stretch flex-1 overflow-hidden">
+	<input id="search-input" data-language="{{ language }}" type="text" name="search" value="{{ query }}" placeholder="{{ text_search }}" class="input flex-1 border-none bg-transparent"/>
+	<button type="button" id="search-button" class="button-secondary border-l rounded-none border-gray-300">
 		<svg aria-hidden="true" viewbox="0 0 24 24">
 			<use href="/assets/icons/sprite.svg#icon-search"></use>
 		</svg>

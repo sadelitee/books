@@ -1,32 +1,32 @@
 <header class="header">
 	<div class="container flex mx-auto justify-between items-center">
 		{% if 'common/home' == route %}
-			<img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" style="width:200px"/>
+			<img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" style="height:40px"/>
 		{% else %}
-			<a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" style="width:200px" alt="{{ name }}"/></a>
+			<a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" style="height:40px" alt="{{ name }}"/></a>
 		{% endif %}
 
 
 		{# <button class="flex flex-wrap items-center gap-2 px-4 py-2 text-sm rounded-lg cursor-pointer" onclick="openMenu()"> #}
-		<button class="button-primary" onclick="openMenu()">
-			<svg aria-hidden="true" class="w-4 h-4" viewbox="0 0 24 24">
+		<button class="button-primary mx-3" onclick="openMenu()">
+			<svg aria-hidden="true" class="w-4 h-4 max-md:hidden" viewbox="0 0 24 24">
 				<use href="/assets/icons/sprite.svg#icon-menu"></use>
 			</svg>
 			<p>Каталог</p>
 		</button>
 
-		<div class="flex flex-wrap items-center gap-2">
+		<div class="flex items-center gap-2 flex-1">
 			{{ currency }}
 			{{ language }}
 			{{ search }}
-			<a href="{{ account }}" class="button-secondary icon">
+			<a href="{{ account }}" class="button-secondary icon max-md:hidden">
 				<svg aria-hidden="true" viewbox="0 0 24 24">
 					<use href="/assets/icons/sprite.svg#icon-user"></use>
 				</svg>
-				<p class="max-md:hidden">Акаунт</p>
+				<p>Акаунт</p>
 			</a>
 
-			<div data-type="hover" class="relative inline-block group">
+			<div data-type="hover" class="relative inline-block group max-md:hidden">
 
 				<button data-type="hover" class="button-secondary px-3">
 					<svg class="w-5 h-5 flex-shrink-0" viewbox="0 0 24 24" fill="none">
@@ -74,11 +74,10 @@
 						<p class="inline-block">Telegram</p>
 					</a>
 				</div>
+
 			</div>
 
 		</div>
 		{{ cart }}
 	</div>
 </div></header>{{ menu }}
-
-

@@ -48,6 +48,55 @@
 	</div>
 </footer>
 
+
+{# mobile menu #}
+
+<nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex items-center justify-around px-2 py-2 z-10 md:hidden">
+
+	<a href="{% if 'common/home' == route %}/{% else %}{{ home }}{% endif %}" class="flex flex-col items-center gap-1 text-xs text-primary px-3 py-1">
+		<svg class="w-6 h-6" viewbox="0 0 24 24" fill="none">
+			<use href="/assets/icons/sprite.svg#lucide-house"></use>
+		</svg>
+		<span>Головна</span>
+	</a>
+
+	<div onclick="openMenu()" class="flex flex-col items-center gap-1 text-xs text-primary px-3 py-1">
+		<svg class="w-6 h-6" viewbox="0 0 24 24" fill="none">
+			<use href="/assets/icons/sprite.svg#icon-menu"></use>
+		</svg>
+		<span>Каталог</span>
+	</div>
+
+	<button onclick="openCart()" class="flex flex-col items-center gap-1 text-xs text-primary px-3 py-1 relative">
+		<div class="relative">
+			<svg class="w-6 h-6" viewbox="0 0 24 24" fill="none">
+				<use href="/assets/icons/sprite.svg#icon-cart"></use>
+			</svg>
+			<span id="mobile-cart-badge" class="badge absolute top-[-4px] right-[-4px] bg-white text-primary border border-primary" data-size="small"></span>
+		</div>
+		<span>Кошик</span>
+	</button>
+
+	{# <a href="/wishlist" class="flex flex-col items-center gap-1 text-xs text-gray-500 hover:text-primary px-3 py-1">
+																		<svg class="w-6 h-6" viewbox="0 0 24 24" fill="none">
+																			<use href="/assets/icons/sprite.svg#icon-heart"></use>
+																		</svg>
+																		<span>Обране</span>
+																	</a> #}
+
+	<a href="/my-account" class="flex flex-col items-center gap-1 text-xs text-primary px-3 py-1">
+		<svg class="w-6 h-6" viewbox="0 0 24 24" fill="none">
+			<use href="/assets/icons/sprite.svg#icon-user"></use>
+		</svg>
+		<span>Кабінет</span>
+	</a>
+
+</nav>
+
+<!-- Отступ снизу чтоб контент не перекрывался -->
+{# <div class="h-16 md:hidden"></div> #}
+
+
 {% for style in styles %}
 	<link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}"/>
 {% endfor %}

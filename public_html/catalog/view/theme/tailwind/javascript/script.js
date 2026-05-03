@@ -71,7 +71,7 @@ let cartToastTimeout = null;
 function openCart() {
     cartModal.addClass('open');
     cartOverlay.removeClass('hidden');
-    $('body').addClass('overflow-hidden');
+    $('body').addClass('disable-scroll');
 
     $.ajax({
         url: 'index.php?route=common/cart/info',
@@ -102,7 +102,7 @@ function openCart() {
 function closeCart() {
     cartModal.removeClass('open');
     cartOverlay.addClass('hidden');
-    $('body').removeClass('overflow-hidden');
+    $('body').removeClass('disable-scroll');
 }
 
 function addToCart(product_id, quantity = 1, button) {
@@ -282,13 +282,13 @@ const updateCartProductDebounced = debounce(updateCartProduct, 500);
 function openMenu() {
     $('#menu-sheet').toggleClass('open');
     $('#sheet-overlay').toggleClass('hidden');
-    $('body').toggleClass('overflow-hidden');
+    $('body').toggleClass('disable-scroll');
 }
 
 function closeMenu() {
     $('#menu-sheet').toggleClass('open');
     $('#sheet-overlay').toggleClass('hidden');
-    $('body').toggleClass('overflow-hidden');
+    $('body').toggleClass('disable-scroll');
 }
 
 // Menu

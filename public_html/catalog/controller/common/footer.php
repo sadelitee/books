@@ -1,6 +1,8 @@
 <?php
-class ControllerCommonFooter extends Controller {
-	public function index() {
+class ControllerCommonFooter extends Controller
+{
+	public function index()
+	{
 		$this->load->language('common/footer');
 
 		$this->load->model('catalog/information');
@@ -16,6 +18,7 @@ class ControllerCommonFooter extends Controller {
 			}
 		}
 
+		$data['home'] = $this->url->link('common/home');
 		$data['contact'] = $this->url->link('information/contact');
 		$data['return'] = $this->url->link('account/return/add', '', true);
 		$data['sitemap'] = $this->url->link('information/sitemap');
@@ -58,7 +61,7 @@ class ControllerCommonFooter extends Controller {
 
 		$data['scripts'] = $this->document->getScripts('footer');
 		$data['styles'] = $this->document->getStyles('footer');
-		
+
 		return $this->load->view('common/footer', $data);
 	}
 }
