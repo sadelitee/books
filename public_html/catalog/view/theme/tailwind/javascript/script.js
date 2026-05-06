@@ -61,7 +61,7 @@ function debounce(func, wait) {
 // Cart
 
 const cartButton = $('#cart-button');
-const cartBadge = $('#cart-badge');
+const cartBadge = $('.cart-badge');
 const cartModal = $('#cart-modal');
 const cartProducts = $('#cart-modal-products');
 const cartTotals = $('#cart-modal-totals');
@@ -118,7 +118,6 @@ function addToCart(product_id, quantity = 1, button) {
         success: function (json) {
             cartBadge.text(json['total']);
             // button.innerHTML = button.getAttribute('data-added-text');
-
             if (json['error']) {
                 button.setAttribute('disabled', false);
                 return;

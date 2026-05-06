@@ -21,6 +21,7 @@ class ControllerCommonFooter extends Controller
             }
         }
 
+        $data['productCount'] = $this->cart->countProducts() == 0 ? "" : $this->cart->countProducts();
         $data['cart'] = $this->load->controller('common/cart');
         $data['home'] = $this->url->link('common/home');
         $data['contact'] = $this->url->link('information/contact');
