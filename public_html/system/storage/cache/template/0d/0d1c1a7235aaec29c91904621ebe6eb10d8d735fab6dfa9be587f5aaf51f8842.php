@@ -64,18 +64,20 @@ class __TwigTemplate_5b346da0d7e7897efdd1ad236b754ceff40330219c5d002a57ac49a4ff8
             ";
             } else {
                 // line 7
-                echo "                <li>
+                echo "                <li class=\"flex items-center\">
                     <a href=\"";
                 // line 8
                 echo twig_get_attribute($this->env, $this->source, $context["breadcrumb"], "href", [], "any", false, false, false, 8);
                 echo "\" class=\"breadcrumbs-link\">";
                 echo twig_get_attribute($this->env, $this->source, $context["breadcrumb"], "text", [], "any", false, false, false, 8);
                 echo "</a>
-                    <span class=\"breadcrumbs-separator\">/</span>
+                    <svg viewBox=\"0 0 24 24\" class=\"breadcrumbs-separator\" width=\"16\" height=\"16\">
+                        <use href=\"/assets/icons/sprite.svg#icon-chevron-right\"></use>
+                    </svg>
                 </li>
             ";
             }
-            // line 12
+            // line 14
             echo "        ";
             ++$context['loop']['index0'];
             ++$context['loop']['index'];
@@ -89,7 +91,7 @@ class __TwigTemplate_5b346da0d7e7897efdd1ad236b754ceff40330219c5d002a57ac49a4ff8
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['breadcrumb'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 13
+        // line 15
         echo "    </ol>
 </nav>
 ";
@@ -107,7 +109,7 @@ class __TwigTemplate_5b346da0d7e7897efdd1ad236b754ceff40330219c5d002a57ac49a4ff8
 
     public function getDebugInfo()
     {
-        return array (  93 => 13,  79 => 12,  70 => 8,  67 => 7,  61 => 5,  58 => 4,  41 => 3,  37 => 1,);
+        return array (  95 => 15,  81 => 14,  70 => 8,  67 => 7,  61 => 5,  58 => 4,  41 => 3,  37 => 1,);
     }
 
     public function getSourceContext()

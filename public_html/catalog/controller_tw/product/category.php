@@ -5,6 +5,7 @@
 class ControllerProductCategory extends Controller
 {
     public function index()
+
     {
         $this->load->language('product/category');
 
@@ -192,7 +193,7 @@ class ControllerProductCategory extends Controller
 
                 $data['categories'][] = [
                     'name' =>
-                        $result['name'] .
+                    $result['name'] .
                         ($this->config->get('config_product_count')
                             ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')'
                             : ''),
@@ -214,7 +215,16 @@ class ControllerProductCategory extends Controller
                 'limit' => $limit,
             ];
 
+
             $product_total = $this->model_catalog_product->getTotalProducts($filter_data);
+
+            $word = $this->plural_ua($product_total, ['товар', 'товари', 'товарів']);
+
+            $data['product_count'] = sprintf(
+                '%s %s',
+                $product_total,
+                $word
+            );
 
             $results = $this->model_catalog_product->getProducts($filter_data);
 
@@ -278,13 +288,13 @@ class ControllerProductCategory extends Controller
                     'thumb' => $image,
                     'name' => $result['name'],
                     'description' =>
-                        utf8_substr(
-                            trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))),
-                            0,
-                            $this->config->get(
-                                'theme_' . $this->config->get('config_theme') . '_product_description_length',
-                            ),
-                        ) . '..',
+                    utf8_substr(
+                        trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))),
+                        0,
+                        $this->config->get(
+                            'theme_' . $this->config->get('config_theme') . '_product_description_length',
+                        ),
+                    ) . '..',
                     'price' => $price,
                     'special' => $special,
                     'tax' => $tax,
@@ -598,5 +608,22 @@ class ControllerProductCategory extends Controller
 
             $this->response->setOutput($this->load->view('error/not_found', $data));
         }
+    }
+
+    private function plural_ua($number, $forms)
+    {
+        $number = abs($number) % 100;
+        $n1 = $number % 10;
+
+        if ($number > 10 && $number < 20) {
+            return $forms[2];
+        }
+        if ($n1 > 1 && $n1 < 5) {
+            return $forms[1];
+        }
+        if ($n1 == 1) {
+            return $forms[0];
+        }
+        return $forms[2];
     }
 }

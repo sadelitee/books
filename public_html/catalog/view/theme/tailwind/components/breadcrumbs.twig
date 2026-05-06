@@ -4,9 +4,11 @@
             {% if loop.last %}
                 <li class="breadcrumbs-current" aria-current="page">{{ breadcrumb.text }}</li>
             {% else %}
-                <li>
+                <li class="flex items-center">
                     <a href="{{ breadcrumb.href }}" class="breadcrumbs-link">{{ breadcrumb.text }}</a>
-                    <span class="breadcrumbs-separator">/</span>
+                    <svg viewBox="0 0 24 24" class="breadcrumbs-separator" width="16" height="16">
+                        <use href="/assets/icons/sprite.svg#icon-chevron-right"></use>
+                    </svg>
                 </li>
             {% endif %}
         {% endfor %}

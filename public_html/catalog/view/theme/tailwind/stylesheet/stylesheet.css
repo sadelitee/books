@@ -70,7 +70,7 @@
     }
 
     body {
-        @apply text-neutral-900 bg-white dark:text-white dark:bg-neutral-900;
+        @apply text-neutral-800 bg-white dark:text-white dark:bg-neutral-900;
         font-family: 'Manrope', sans-serif !important;
     }
 }
@@ -81,8 +81,44 @@
     .button-primary,
     .button-secondary,
     .button-destructive {
-        @apply inline-flex justify-center rounded-lg items-center gap-2 px-6 py-2 transition-colors cursor-pointer;
+        @apply inline-flex justify-center rounded-lg items-center gap-2 px-6 py-2 transition-colors cursor-pointer whitespace-nowrap;
     }
+
+    /* 🔹 SIZE: SMALL */
+    .button-primary[data-size='small'],
+    .button-secondary[data-size='small'],
+    .button-destructive[data-size='small'] {
+        @apply px-3 py-1.5 text-sm;
+    }
+
+    /* 🔹 SIZE: LARGE */
+    .button-primary[data-size='large'],
+    .button-secondary[data-size='large'],
+    .button-destructive[data-size='large'] {
+        @apply px-8 py-3 text-lg;
+    }
+
+    /* 🔹 БАЗА для icon — работает ВСЕГДА */
+    .button-primary[data-type='icon'],
+    .button-secondary[data-type='icon'],
+    .button-destructive[data-type='icon'] {
+        @apply w-10 h-10 min-w-10 min-h-10 p-0 gap-0;
+    }
+
+    /* 🔹 SIZE overrides */
+    .button-primary[data-type='icon'][data-size='small'],
+    .button-secondary[data-type='icon'][data-size='small'],
+    .button-destructive[data-type='icon'][data-size='small'] {
+        @apply w-8 h-8 min-w-8 min-h-8;
+    }
+
+    .button-primary[data-type='icon'][data-size='large'],
+    .button-secondary[data-type='icon'][data-size='large'],
+    .button-destructive[data-type='icon'][data-size='large'] {
+        @apply w-12 h-12 min-w-12 min-h-12;
+    }
+
+    /* BUTTON STYLES */
 
     .button-primary {
         @apply bg-primary-600 text-white hover:bg-primary-700;
@@ -90,26 +126,23 @@
 
     .button-secondary {
         @apply bg-white text-black hover:bg-neutral-200
-        dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700;
+    dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700;
     }
 
     .button-destructive {
         @apply bg-red-50 text-red-600 hover:bg-red-100
-        dark:bg-red-900 dark:text-red-300 dark:hover:bg-red-800;
+    dark:bg-red-900 dark:text-red-300 dark:hover:bg-red-800;
     }
 
-    /* Кнопка только с иконкой */
-    .button-primary[data-type='icon'],
-    .button-secondary[data-type='icon'],
-    .button-destructive[data-type='icon'] {
-        @apply w-10 h-10 min-w-10 min-h-10 p-0 gap-0;
-    }
+    /* ICONS */
 
     .button-primary svg,
     .button-secondary svg,
     .button-destructive svg {
         @apply w-5 h-5 shrink-0;
     }
+
+    /* STATES */
 
     .button-primary[disabled],
     .button-secondary[disabled],
@@ -212,27 +245,27 @@
 
     h1.heading,
     .heading-1 {
-        @apply text-5xl font-bold;
+        @apply text-3xl font-bold mb-3;
     }
 
     h2.heading,
     .heading-2 {
-        @apply text-4xl font-bold;
+        @apply text-2xl font-bold;
     }
 
     h3.heading,
     .heading-3 {
-        @apply text-3xl font-bold;
+        @apply text-xl font-bold;
     }
 
     h4.heading,
     .heading-4 {
-        @apply text-2xl font-bold;
+        @apply text-xl font-bold;
     }
 
     h5.heading,
     .heading-5 {
-        @apply text-xl font-bold;
+        @apply text-lg font-bold;
     }
 
     h6.heading,
@@ -379,7 +412,7 @@
     }
 
     .breadcrumbs-list {
-        @apply flex flex-wrap items-center gap-1;
+        @apply flex flex-nowrap overflow-auto items-center gap-1;
     }
 
     .breadcrumbs-link {
