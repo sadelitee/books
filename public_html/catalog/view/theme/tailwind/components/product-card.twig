@@ -1,40 +1,63 @@
-{% if product.quantity < 1 %}
-  {% set class = 'out-of-stock' %}
-  {% set outofstock = true %}
-{% endif %}
+<div class="product-card relative group">
+	<a href="{{ product.href }}" class="product-card-image">
+		{% if product.specs %}
+			<div class="product-card-badges">
+				{% for spec in product.specs %}
+					<p class="product-card-badge">
+						{{ spec }}
+					</p>
+				{% endfor %}
+			</div>
+		{% endif %}
+		<img src="{{ product.thumb }}" alt="{{ product.name }}" width="370" height="370"/>
+	</a>
+	<div class="product-card-content flex-1 mt-1.5">
+		<div class="flex items-center text-sm">
+			<svg class="text-orange-600 mr-1" viewbox="0 0 24 24" width="12" height="12">
+				<use href="/assets/icons/sprite.svg#lucide-star"></use>
+			</svg>
+			<span class="mr-3">{{ product.rating }}</span>
+			<svg class="text-gray-600 mr-1" viewbox="0 0 24 24" width="12" height="12">
+				<use href="/assets/icons/sprite.svg#lucide-message-square-text"></use>
+			</svg>
+			<span>{{ product.reviews }}</span>
+		</div>
+		<a href="{{ product.href }}" class="product-card-title">
+			{{ product.name }}
+		</a>
+		<p class="text-xs text-gray-500 mb-1.5">{{ product.author }}</p>
 
-<div class="product-card">
-  <a href="{{ product.href }}" class="product-card-image">
-    {% if product.specs %}
-      <div class="product-card-badges">
-        {% for spec in product.specs %}
-          <p class="product-card-badge">
-            {{ spec }}
-          </p>
-        {% endfor %}
-      </div>
-    {% endif %}
-    <img src="{{ product.thumb }}" alt="{{ product.name }}" width="370" height="370" />
-  </a>
-  <div class="product-card-content">
-    <a href="{{ product.href }}" class="product-card-title">
-      {{ product.name }}
-    </a>
-    <p class="product-card-price">
-      {{ product.price }}
-      {% if product.special %}
-        <span class="product-card-special">
-          {{ product.special }}
-        </span>
-      {% endif %}
-    </p>
-    <button
-      data-added-text="Added to cart"
-      class="button-primary mt-auto"
-      onclick="addToCart({{ product.product_id }}, 1, this)"
-      {% if outofstock %}disabled{% endif %}
-    >
-        {% if outofstock %}Out of stock{% else %}Add to cart{% endif %}
-    </button>
-  </div>
+		{% if product.quantity >= 1 %}
+
+			<div class="flex justify-between mt-auto items-center">
+				<div class="flex flex-col">
+					{% if product.special %}
+						<p class="product-card-price text-sm text-gray-600 line-through">{{ product.price }}</p>
+						<span class="product-card-special font-black text-primary text-lg leading-[14px]">
+							{{ product.special }}
+						</span>
+					{% else %}
+						<p class="product-card-price text-lg font-black">{{ product.price }}</p>
+					{% endif %}
+				</div>
+				<button class="button-primary mt-auto px-4" onclick="addToCart({{ product.product_id }}, 1, this)">
+					<svg viewbox="0 0 24 24" width="16" height="16">
+						<use href="/assets/icons/sprite.svg#icon-cart"></use>
+					</svg>
+				</button>
+			</div>
+
+		{% else %}
+
+			<p class="text-xs text-gray-600 mt-auto">Немає в наявності</p>
+
+		{% endif %}
+
+	</div>
+
+	<button class="button-secondary floatingButton" data-type="icon">
+		<svg viewbox="0 0 24 24" width="20" height="20">
+			<use href="/assets/icons/sprite.svg#icon-heart"></use>
+		</svg>
+	</button>
 </div>

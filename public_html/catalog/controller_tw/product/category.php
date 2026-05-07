@@ -39,7 +39,7 @@ class ControllerProductCategory extends Controller
                 $this->document->setRobots('noindex,follow');
             }
         } else {
-            $sort = 'p.sort_order';
+            $sort = 'p.quantity';
         }
 
         if (isset($this->request->get['order'])) {
@@ -192,11 +192,11 @@ class ControllerProductCategory extends Controller
                 ];
 
                 $data['categories'][] = [
-                    'name' =>
-                    $result['name'] .
-                        ($this->config->get('config_product_count')
-                            ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')'
-                            : ''),
+                    'name' => $result['name'],
+                    // $result['name'] .
+                    //     ($this->config->get('config_product_count')
+                    //         ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')'
+                    //         : ''),
                     'href' => $this->url->link(
                         'product/category',
                         'path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url,
@@ -227,6 +227,9 @@ class ControllerProductCategory extends Controller
             );
 
             $results = $this->model_catalog_product->getProducts($filter_data);
+
+
+            $this->load->model('catalog/product');
 
             foreach ($results as $result) {
                 if ($result['image']) {
@@ -271,6 +274,8 @@ class ControllerProductCategory extends Controller
                     $tax_price = (float) $result['price'];
                 }
 
+                $author = $this->model_catalog_product->getProductAttributeById($result['product_id']);
+
                 if ($this->config->get('config_tax')) {
                     $tax = $this->currency->format($tax_price, $this->session->data['currency']);
                 } else {
@@ -286,6 +291,7 @@ class ControllerProductCategory extends Controller
                 $data['products'][] = [
                     'product_id' => $result['product_id'],
                     'thumb' => $image,
+                    'author' => $author == "" ? "NO AUTHOR!" : $author,
                     'name' => $result['name'],
                     'description' =>
                     utf8_substr(
@@ -301,6 +307,7 @@ class ControllerProductCategory extends Controller
                     'quantity' => $result['quantity'],
                     'minimum' => $result['minimum'] > 0 ? $result['minimum'] : 1,
                     'rating' => $result['rating'],
+                    'reviews' => $result['reviews'],
                     'href' => $this->url->link(
                         'product/product',
                         'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url,

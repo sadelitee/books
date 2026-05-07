@@ -299,10 +299,12 @@
 
     /* PRODUCT CARD */
 
+    .product-grid {
+        @apply border-t border-l border-gray-200;
+    }
+
     .product-card {
-        @apply rounded-xs
-      bg-white
-      dark:bg-neutral-900;
+        @apply rounded-xs bg-white dark:bg-neutral-900 flex flex-col border-r border-b border-gray-200 p-3;
     }
 
     .product-card-image {
@@ -310,13 +312,11 @@
     }
 
     .product-card-content {
-        @apply flex flex-col gap-2 mt-2;
+        @apply flex flex-col mt-2;
     }
 
     .product-card-title {
-        @apply text-sm font-medium
-      text-neutral-900
-      dark:text-neutral-100;
+        @apply text-sm font-medium text-neutral-900 overflow-hidden whitespace-nowrap text-ellipsis;
     }
 
     .product-card-price {
@@ -343,6 +343,10 @@
     }
 
     /* PRODUCT CARD */
+
+    .floatingButton {
+        @apply absolute top-2 left-2 z-10 transition-all duration-200 opacity-100 md:opacity-0 md:pointer-events-none md:group-hover:opacity-100 md:group-hover:pointer-events-auto border border-gray-200 text-primary-400;
+    }
 
     /* MODAL */
 

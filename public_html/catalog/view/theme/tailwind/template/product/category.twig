@@ -14,11 +14,20 @@
 <div class="container mx-auto px-2 grid grid-cols-1 lg:grid-cols-12 gap-6">
 	{{ column_left }}
 	<main class="{{ class }}">
-		<div class="flex p-5 justify-between flex-col lg:flex-row gap-3">
+		<div class="flex py-5 justify-between flex-col lg:flex-row gap-3">
 			<div class="flex gap-2 items-center">
-				<h1 class="heading text-2xl text-neutral-800 mb-0">{{ heading_title }}</h1>
+				<h1 class="heading text-2xl text-neutral-800 mb-0">
+					{% if categories %}
+						{% for category in categories %}
+							{{ category.name }}
+						{% endfor %}
+					{% else %}
+						{{ heading_title }}
+					{% endif %}
+				</h1>
 				<p class="text-neutral-500 text-lg">{{ product_count }}</p>
 			</div>
+			{# <hr class="divider"> #}
 			<div class="flex gap-5 items-center">
 				<button id="filterButton" data-size="small" class="border border-neutral-300 button-secondary lg:hidden flex-1 basis-0">
 					<svg>
@@ -46,20 +55,20 @@
 			</div>
 		</div>
 
-		{% if categories %}
-			<section class="w-full mb-2" aria-label="Categories">
-				<div class="grid grid-cols-2 xl:grid-cols-3 gap-4">
-					{% for category in categories %}
-						<a href="{{ category.href }}">{{ category.name }}</a>
-					{% endfor %}
-				</div>
-			</section>
-		{% endif %}
+		{# {% if categories %}
+							<section class="w-full mb-2" aria-label="Categories">
+								<div class="grid grid-cols-2 xl:grid-cols-3 gap-4">
+									{% for category in categories %}
+										<a href="{{ category.href }}">{{ category.name }}</a>
+									{% endfor %}
+								</div>
+							</section>
+						{% endif %} #}
 
 		{{ content_top }}
 
 		{% if products %}
-			<section class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 xl:grid-cols-4 gap-4" aria-label="Products">
+			<section class="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-5 xl:grid-cols-4 product-grid" aria-label="Products">
 				{% for product in products %}
 					{% include 'tailwind/components/product-card.twig' with {
                         product: product
