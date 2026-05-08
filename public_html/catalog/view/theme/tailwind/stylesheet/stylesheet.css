@@ -150,6 +150,12 @@
         @apply opacity-50 pointer-events-none;
     }
 
+    .button-primary[active],
+    .button-secondary[active],
+    .button-destructive[active] {
+        @apply opacity-50 pointer-events-none;
+    }
+
     .button-badge {
         @apply absolute -top-1 -right-1 translate-x-1/4 -translate-y-1/4;
     }
@@ -436,23 +442,31 @@
     /* PAGINATION */
 
     .pagination {
-        @apply flex items-center justify-center flex-wrap gap-1;
+        @apply flex items-center flex-1 gap-1 max-[374px]:flex-wrap;
     }
 
-    .pagination li {
-        @apply inline-block;
+    .pagination-item {
+        @apply text-sm border border-gray-300 py-2 rounded-md min-w-8 max-w-20 flex flex-1 justify-center transition-all duration-300 ease-in-out;
     }
 
-    .pagination a,
-    .pagination span {
-        @apply flex items-center justify-center min-w-10 min-h-10 px-3 font-medium rounded-xs border 
-    border-neutral-300 text-neutral-700 bg-white transition-colors duration-150 hover:bg-neutral-300 hover:text-black
-    dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700;
+    .pagination-prev,
+    .pagination-next {
+        @apply text-sm border border-gray-300 px-3 py-2 flex flex-1 items-center gap-1 rounded-lg h-full justify-center transition-all duration-300 ease-in-out max-w-[143px];
     }
 
-    .pagination li.active span {
-        @apply bg-neutral-900 text-white border-neutral-900
-    dark:bg-white dark:text-black dark:border-white;
+    .pagination-next[disabled],
+    .pagination-prev[disabled] {
+        @apply opacity-50 border-none bg-gray-200;
+    }
+
+    .pagination-item[active] {
+        @apply text-primary  border-primary pointer-events-none;
+    }
+
+    .pagination-prev:hover,
+    .pagination-next:hover,
+    .pagination-item:hover {
+        @apply bg-neutral-200;
     }
 
     /* PAGINATION */

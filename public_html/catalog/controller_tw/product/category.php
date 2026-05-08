@@ -66,7 +66,7 @@ class ControllerProductCategory extends Controller
                 $this->document->setRobots('noindex,follow');
             }
         } else {
-            $limit = $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit');
+            $limit = 40;
         }
 
         $data['breadcrumbs'] = [];
