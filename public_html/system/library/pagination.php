@@ -40,7 +40,7 @@ class Pagination
 
 			$output .= '<a class="pagination-prev" href="' . $prev_url . '"><svg viewbox="0 0 24 24" width="12" height="20"><use href="/assets/icons/sprite.svg#icon-chevron-left"></use></svg>' . '<p class="hidden sm:block">' . $this->text_prev . '</p></a>';
 		} else {
-			$output .= '<span class="pagination-prev" disabled><svg viewbox="0 0 24 24" width="12" height="20"><use href="/assets/icons/sprite.svg#icon-chevron-left"><p class="hidden sm:block">' . $this->text_prev . '</p></span>';
+			$output .= '<span class="pagination-prev" disabled><svg viewbox="0 0 24 24" width="12" height="20"><use href="/assets/icons/sprite.svg#icon-chevron-left"><p class="hidden sm:block">' . $this->text_prev . '</p></svg></span>';
 		}
 
 		// Страницы
@@ -95,7 +95,7 @@ class Pagination
 			$output .= '<span class="pagination-next" disabled><p class="hidden sm:block">' . $this->text_next . '</p><svg viewbox="0 0 24 24" width="12" height="20"><use href="/assets/icons/sprite.svg#icon-chevron-right"></use></svg></span>';
 		}
 
-		$output .= '</ul>';
+		$output .= '</div>';
 
 		return $output;
 	}

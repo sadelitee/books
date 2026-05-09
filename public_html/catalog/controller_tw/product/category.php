@@ -274,7 +274,7 @@ class ControllerProductCategory extends Controller
                     $tax_price = (float) $result['price'];
                 }
 
-                $author = $this->model_catalog_product->getProductAttributeById($result['product_id']);
+                $author = $this->model_catalog_product->getProductAttributeValue($result['product_id'], 12);
 
                 if ($this->config->get('config_tax')) {
                     $tax = $this->currency->format($tax_price, $this->session->data['currency']);

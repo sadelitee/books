@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html dir="{{ direction }}" lang="{{ lang }}" class="{{ theme }}">
-	<head></head>
-{{ head }}
-{{ microdata.head }}</head><body>
+	<head>
+		{{ head }}
+		{{ microdata.head }}
+	</head>
+	<body>
+		<div id="toast" class="toast hidden" data-align="right-top" data-type="success">
+			<div class="toast-content">
+				<svg class="toast-icon" viewbox="0 0 24 24" aria-hidden="true">
+					<use id="toast-icon" href="#icon-check"></use>
+				</svg>
+				<div class="toast-message"></div>
+				<button class="toast-close" onclick="closeToast()">×</button>
+			</div>
+		</div>
 
+		<div id="viewport">
+			{{ header }}
 
-{# cart toast #}
+			{{ content }}
 
-<div id="toast" class="toast hidden" data-align="right-top" data-type="success">
-	<div class="toast-content">
-		<svg class="toast-icon" viewbox="0 0 24 24" aria-hidden="true">
-			<use id="toast-icon" href="#icon-check"></use>
-		</svg> 
-		<div class="toast-message"></div> 
-		<button class="toast-close" onclick="closeToast()">×</button>
-	</div>
-</div>
-
-
-{{ header }}
-
-{{ content }}
-
-{{ footer }}
-
-{{ microdata.body }}</body></html>
+			{{ footer }}
+		</div>
+		{{ microdata.body }}
+	</body>
+</html>

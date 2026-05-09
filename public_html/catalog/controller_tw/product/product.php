@@ -260,6 +260,12 @@ class ControllerProductProduct extends Controller
 			$data['points'] = $product_info['points'];
 			$data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
 
+			$data['author'] = $this->model_catalog_product->getProductAttributeValue($product_id, 12);
+			$data['publisher'] = $this->model_catalog_product->getProductAttributeValue($product_id, 13);
+			$data['language'] = $this->model_catalog_product->getProductAttributeValue($product_id, 14);
+			$data['cover_type'] = $this->model_catalog_product->getProductAttributeValue($product_id, 15);
+
+
 			if ($product_info['quantity'] <= 0) {
 				$data['stock'] = $product_info['stock_status'];
 			} elseif ($this->config->get('config_stock_display')) {
@@ -379,7 +385,7 @@ class ControllerProductProduct extends Controller
 				$data['customer_name'] = '';
 			}
 
-			$data['reviews'] = sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']);
+			$data['reviewsCount'] = sprintf((int)$product_info['reviews']);
 			$data['rating'] = (int)$product_info['rating'];
 
 			// Captcha
@@ -424,6 +430,7 @@ class ControllerProductProduct extends Controller
 					$tax = false;
 				}
 
+
 				if ($this->config->get('config_review_status')) {
 					$rating = (int)$result['rating'];
 				} else {
@@ -462,6 +469,7 @@ class ControllerProductProduct extends Controller
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
 
 			$data['view'] = 'product/product';
+			$data['reviews'] = $this->review();
 			$this->response->setOutput($this->load->controller('common/layout', $data));
 		} else {
 			$url = '';
@@ -531,9 +539,44 @@ class ControllerProductProduct extends Controller
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
-
 			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
+	}
+	public function formatDate($date, $language_code = 'ua')
+	{
+		$timestamp = strtotime($date);
+
+		$months = [
+			'ua' => [
+				1 => 'січня',
+				2 => 'лютого',
+				3 => 'березня',
+				4 => 'квітня',
+				5 => 'травня',
+				6 => 'червня',
+				7 => 'липня',
+				8 => 'серпня',
+				9 => 'вересня',
+				10 => 'жовтня',
+				11 => 'листопада',
+				12 => 'грудня',
+			],
+		];
+
+		$day = date('d', $timestamp);
+		$month = (int)date('n', $timestamp);
+		$year = date('Y', $timestamp);
+
+		if (!isset($months[$language_code])) {
+			return date('d.m.Y', $timestamp);
+		}
+
+		return $day . ' ' . $months[$language_code][$month] . ' ' . $year;
+	}
+
+	public function loadReview()
+	{
+		$this->response->setOutput($this->review());
 	}
 
 	public function review()
@@ -559,7 +602,7 @@ class ControllerProductProduct extends Controller
 				'author'     => $result['author'],
 				'text'       => nl2br($result['text']),
 				'rating'     => (int)$result['rating'],
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+				'date_added' => $this->formatDate($result['date_added']),
 			);
 		}
 
@@ -567,13 +610,15 @@ class ControllerProductProduct extends Controller
 		$pagination->total = $review_total;
 		$pagination->page = $page;
 		$pagination->limit = 5;
-		$pagination->url = $this->url->link('product/product/review', 'product_id=' . $this->request->get['product_id'] . '&page={page}');
+		$pagination->num_links = 3;
+		$pagination->url = $this->url->link('product/product/loadReview', 'product_id=' . $this->request->get['product_id'] . '&page={page}');
 
 		$data['pagination'] = $pagination->render();
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($review_total) ? (($page - 1) * 5) + 1 : 0, ((($page - 1) * 5) > ($review_total - 5)) ? $review_total : ((($page - 1) * 5) + 5), $review_total, ceil($review_total / 5));
 
-		$this->response->setOutput($this->load->view('product/review', $data));
+		// $this->response->setOutput($this->load->view('product/review', $data));
+		return $this->load->view('product/review', $data);
 	}
 
 	public function write()
@@ -587,7 +632,7 @@ class ControllerProductProduct extends Controller
 				$json['error'] = $this->language->get('error_name');
 			}
 
-			if ((utf8_strlen($this->request->post['text']) < 25) || (utf8_strlen($this->request->post['text']) > 1000)) {
+			if ((utf8_strlen($this->request->post['text']) > 1000)) {
 				$json['error'] = $this->language->get('error_text');
 			}
 

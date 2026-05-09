@@ -1,10 +1,10 @@
 <?php
 
 // Locale
-$_['code'] = 'ua';
+$_['code'] = 'uk_UA';
 $_['direction'] = 'ltr';
 $_['date_format_short'] = 'd.m.Y';
-$_['date_format_long'] = 'l, d F Y';
+$_['date_format_long'] = 'd F Y';
 $_['time_format'] = 'H:i:s';
 $_['datetime_format'] = 'd/m/Y H:i:s';
 $_['decimal_point'] = '.';

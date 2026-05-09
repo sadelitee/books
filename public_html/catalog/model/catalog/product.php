@@ -64,24 +64,22 @@ class ModelCatalogProduct extends Model
 		}
 	}
 
-	public function getProductAttributeById($product_id, $attribute_id = 12)
+	public function getProductAttributeValue($product_id, $attribute_id)
 	{
 		$query = $this->db->query("
-			SELECT pa.text
-			FROM " . DB_PREFIX . "product_attribute pa
-			LEFT JOIN " . DB_PREFIX . "attribute a 
-				ON (pa.attribute_id = a.attribute_id)
-			WHERE pa.product_id = '" . (int)$product_id . "'
-			AND pa.attribute_id = '" . (int)$attribute_id . "'
-			AND pa.language_id = '" . (int)$this->config->get('config_language_id') . "'
-			LIMIT 1
-		");
+		SELECT pa.text
+		FROM " . DB_PREFIX . "product_attribute pa
+		WHERE pa.product_id = '" . (int)$product_id . "'
+		AND pa.attribute_id = '" . (int)$attribute_id . "'
+		AND pa.language_id = '" . (int)$this->config->get('config_language_id') . "'
+		LIMIT 1
+	");
 
 		if ($query->num_rows) {
 			return $query->row['text'];
 		}
 
-		return false;
+		return '';
 	}
 
 	public function getProducts($data = array())

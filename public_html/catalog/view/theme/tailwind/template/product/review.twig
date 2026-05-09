@@ -1,38 +1,48 @@
 {% if reviews %}
-    {% for review in reviews %}
-        <table class="table table-striped table-bordered">
-            <tr>
-                <td style="width: 50%;"><strong>{{ review.author }}</strong></td>
-                <td class="text-right">{{ review.date_added }}</td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <p>
-                        {{ review.text }}
-                    </p>
-                    {% for i in 1..5 %}
-                        {% if review.rating < i %}
-                            <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                        {% else %}
-                            <span class="fa fa-stack">
-                                <i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i>
-                            </span>
-                        {% endif %}
-                    {% endfor %}
-                </td>
-            </tr>
-        </table>
-    {% endfor %}
-    <div class="row">
-        <div class="col-sm-6 text-left">
-            {{ pagination }}
-        </div>
-        <div class="col-sm-6 text-right">
-            {{ results }}
-        </div>
-    </div>
+	<div class="flex flex-col gap-4">
+		{% for review in reviews %}
+			<div class="rounded-lg border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
+				<!-- HEADER -->
+				<div class="mb-2 flex items-center justify-between">
+					<div class="font-semibold text-neutral-900 dark:text-white">
+						{{ review.author }}
+					</div>
+
+					<div class="text-xs text-neutral-500">
+						{{ review.date_added }}
+					</div>
+				</div>
+
+				<!-- TEXT -->
+				<p class="mb-3 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
+					{{ review.text }}
+				</p>
+
+				<!-- STARS -->
+				<div class="flex items-center gap-1">
+					{% for i in 1..5 %}
+						<svg
+							class="{% if review.rating >= i %}text-orange-500{% else %}text-neutral-300 dark:text-neutral-600{% endif %} h-4 w-4"
+							viewBox="0 0 24 24"
+						>
+							<use href="/assets/icons/sprite.svg#lucide-star"></use>
+						</svg>
+					{% endfor %}
+				</div>
+			</div>
+		{% endfor %}
+
+		<!-- PAGINATION -->
+			<div class="my-2 flex mb-4 mt-0 justify-between flex-1">
+				{{ pagination }}
+			</div>
+
+			{# <div class="text-sm text-neutral-500">
+				{{ results }}
+			</div> #}
+	</div>
 {% else %}
-    <p>
-        {{ text_no_reviews }}
-    </p>
+	<p class="text-sm text-neutral-500">
+		{{ text_no_reviews }}
+	</p>
 {% endif %}
