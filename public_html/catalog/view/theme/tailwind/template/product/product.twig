@@ -1,257 +1,231 @@
-{% set class = "col-span-12 " %}
-{% if column_left and column_right %}
-	{% set class = class ~ "lg:col-span-6" %}
-{% elseif column_left or column_right %}
-	{% set class = class ~ "lg:col-span-9" %}
-{% else %}
-	{% set class = class ~ "lg:col-span-12 pt-5" %}
-{% endif %}
+<div class="container mx-auto px-2">
+	<div class="grid gap-x-4 lg:grid-cols-[1fr_2fr_1fr]">
+		<section class="order-1 lg:col-start-1 lg:row-span-3" aria-label="Image">
+			<div class="sticky top-[95px] flex flex-col">
+				<img class="max-h-[356px] object-contain" src="{{ thumb }}" alt="{{ heading_title }}" />
+				<div class="flex gap-2">
+					{% if images %}
+						{% for image in images %}
+							<img src="{{ image.thumb }}" alt="{{ heading_title }}" />
+						{% endfor %}
+					{% endif %}
+				</div>
+			</div>
+		</section>
 
-{# <div class="container mx-auto px-2">
-	{% include 'tailwind/components/breadcrumbs.twig' %}
-</div> #}
-<div class="container mx-auto grid grid-cols-1 gap-6 px-2 lg:grid-cols-12">
-	{{ column_left }}
-	<main class="{{ class }}">
-		{{ content_top }}
+		<section class="order-first max-sm:overflow-hidden lg:col-start-2 lg:row-start-1" aria-label="Breadcrumbs">
+			{% include "tailwind/components/breadcrumbs.twig" with { class: "sm:flex-wrap sm:flex" } %}
+		</section>
 
-		<div class="flex flex-col gap-2 lg:flex-row">
-			<section class="w-full lg:w-1/4" aria-label="Preview">
-				<div class="sticky top-[95px] flex flex-col">
-					<img class="max-h-[356px] object-contain" src="{{ thumb }}" alt="{{ heading_title }}" />
-					<div class="flex gap-2">
-						{% if images %}
-							{% for image in images %}
-								<img src="{{ image.thumb }}" alt="{{ heading_title }}" />
-							{% endfor %}
-						{% endif %}
+		<section class="order-3 lg:col-start-3 lg:row-span-3" aria-label="Buy">
+			<div class="sticky top-[95px] flex flex-col gap-2">
+				<p class="heading-3">
+					{{ price }}
+				</p>
+				<div class="flex items-center gap-1">
+					{% if quantity >= 1 %}
+						<svg aria-hidden="true" class="text-green-800" height="16" width="16" viewbox="0 0 24 24">
+							<use href="/assets/icons/sprite.svg#lucide-truck"></use>
+						</svg>
+						<p class="text-sm text-green-800">
+							В наявності
+						</p>
+					{% else %}
+						<svg aria-hidden="true" class="text-gray-600" height="16" width="16" viewbox="0 0 24 24">
+							<use href="/assets/icons/sprite.svg#lucide-truck"></use>
+						</svg>
+						<p class="text-sm text-gray-600">
+							Не в наявності
+						</p>
+					{% endif %}
+					<span class="text-gray-600">•</span>
+					<p class="text-sm text-gray-600">
+						Паперова книга
+					</p>
+				</div>
+				{% if quantity >= 1 %}
+					<button class="button-primary">
+						<svg aria-hidden="true" viewbox="0 0 24 24">
+							<use href="/assets/icons/sprite.svg#icon-cart"></use>
+						</svg>Купити
+					</button>
+				{% else %}
+					<button class="button-secondary border border-gray-400" disabled>Немає в наявності</button>
+				{% endif %}
+			</div>
+		</section>
+
+		<section class="order-4 lg:col-start-2 lg:row-start-2" aria-label="Title">
+			<div class="flex flex-col">
+				<h1 class="heading-2">{{ heading_title }}</h1>
+				<p class="text-primary">
+					{{ author }}
+				</p>
+				{% set rounded_rating = rating | split(".") | first %}
+
+				<div class="my-1 flex items-center text-sm">
+					<div class="mr-2 flex items-center gap-0.5">
+						{% for i in 1..5 %}
+							{% if rounded_rating >= i %}
+								<svg class="size-3 text-orange-600" viewbox="0 0 24 24" fill="currentColor" aria-hidden="true">
+									<use href="/assets/icons/sprite.svg#lucide-star"></use>
+								</svg>
+							{% else %}
+								<svg class="size-3 text-gray-400" viewbox="0 0 24 24" fill="currentColor" aria-hidden="true">
+									<use href="/assets/icons/sprite.svg#lucide-star"></use>
+								</svg>
+							{% endif %}
+						{% endfor %}
+					</div>
+					<span class="mr-3 text-gray-700">{{ rating }}</span>
+
+					<div class="flex items-center text-gray-600">
+						<svg class="mr-1 size-3" viewbox="0 0 24 24" stroke="currentColor" fill="none" aria-hidden="true">
+							<use href="/assets/icons/sprite.svg#lucide-message-square-text"></use>
+						</svg>
+
+						<span>{{ reviewsCount }}</span>
 					</div>
 				</div>
-			</section>
+			</div>
+		</section>
 
-			<section class="w-full lg:w-1/2" aria-label="Main">
-				<div class="flex flex-col">
-					{% include "tailwind/components/breadcrumbs.twig" %}
-
-					<h1 class="heading-3">{{ heading_title }}</h1>
-					<p class="text-primary">
-						{{ author }}
+		<section class="order-5 lg:col-start-2 lg:row-start-3" aria-label="Description & Reviews">
+			<div class="text-collapse-wrapper">
+				<div class="text-collapse-content">
+					<p class="mt-2 text-base font-bold">
+						Опис
 					</p>
-					{% set rounded_rating = rating | split(".") | first %}
+					<div class="text-block pb-3">
+						{{ description }}
+					</div>
+				</div>
+				<div class="text-collapse-overlay"></div>
+			</div>
 
-					<div class="my-1 flex items-center text-sm">
-						<div class="mr-2 flex items-center gap-0.5">
-							{% for i in 1..5 %}
-								{% if rounded_rating >= i %}
-									<svg class="size-3 text-orange-600" viewbox="0 0 24 24" fill="currentColor" aria-hidden="true">
-										<use href="/assets/icons/sprite.svg#lucide-star"></use>
-									</svg>
-								{% else %}
-									<svg class="size-3 text-gray-400" viewbox="0 0 24 24" fill="currentColor" aria-hidden="true">
-										<use href="/assets/icons/sprite.svg#lucide-star"></use>
-									</svg>
-								{% endif %}
-							{% endfor %}
-						</div>
-						<span class="mr-3 text-gray-700">{{ rating }}</span>
+			<button class="collapse-toggle text-primary flex cursor-pointer items-center gap-1 text-left">
+				Показати повністю
+				{# <svg aria-hidden="true" width="12px" height="12px" viewbox="0 0 24 24">
+							<use href="/assets/icons/sprite.svg#icon-caret-down"></use>
+						</svg> #}
+			</button>
 
-						<div class="flex items-center text-gray-600">
-							<svg class="mr-1 size-3" viewbox="0 0 24 24" stroke="currentColor" fill="none" aria-hidden="true">
-								<use href="/assets/icons/sprite.svg#lucide-message-square-text"></use>
+			<div class="flex items-center justify-between">
+				<p class="heading-3 my-2">
+					Відгуки
+				</p>
+				<div class="my-1 flex items-center text-sm">
+					<div class="mr-2 flex items-center gap-0.5">
+						{% for i in 1..5 %}
+							{% if rounded_rating >= i %}
+								<svg class="size-3 text-orange-600" viewbox="0 0 24 24" fill="currentColor" aria-hidden="true">
+									<use href="/assets/icons/sprite.svg#lucide-star"></use>
+								</svg>
+							{% else %}
+								<svg class="size-3 text-gray-400" viewbox="0 0 24 24" fill="currentColor" aria-hidden="true">
+									<use href="/assets/icons/sprite.svg#lucide-star"></use>
+								</svg>
+							{% endif %}
+						{% endfor %}
+					</div>
+					<span class="mr-3 text-gray-700">{{ rating }}</span>
+
+					<div class="flex items-center text-gray-600">
+						<svg class="mr-1 size-3" viewbox="0 0 24 24" stroke="currentColor" fill="none" aria-hidden="true">
+							<use href="/assets/icons/sprite.svg#lucide-message-square-text"></use>
+						</svg>
+
+						<span>{{ reviewsCount }}</span>
+					</div>
+				</div>
+			</div>
+			<div class="modal-overlay" data-modal-overlay></div>
+			<div class="button-primary mb-4" type="button" data-modal-open="[data-modal]">
+				Залишити відгук
+			</div>
+			<div id="review-list">
+				{{ reviews }}
+			</div>
+
+			{# MODAL #}
+
+			<div class="modal" data-modal>
+				<div class="modal-content">
+					<div class="modal-header mb-2">
+						<h2 class="modal-title">Додати відгук</h2>
+						<button class="button-secondary" type="button" data-type="icon" data-modal-close>
+							<svg aria-hidden="true" viewbox="0 0 24 24">
+								<use href="/assets/icons/sprite.svg#icon-close"></use>
 							</svg>
-
-							<span>{{ reviewsCount }}</span>
-						</div>
+						</button>
 					</div>
-					{% include "tailwind/components/product-options.twig" with { options: options, text_option: text_option } %}
-
-					{% include "tailwind/components/product-recurrings.twig" with { recurrings: recurrings, text_payment_recurring: text_payment_recurring } %}
-
-					<div class="text-collapse-wrapper">
-						<div class="text-collapse-content">
-							<p class="mt-2 text-base font-bold">
-								Опис книги
+					<div class="flex gap-1">
+						<img src="{{ thumb }}" alt="{{ heading_title }}" class="max-h-[52px]" />
+						<div>
+							<h1 class="heading-3">{{ heading_title }}</h1>
+							<p class="text-primary">
+								{{ author }}
 							</p>
-							<div class="text-block pb-3">
-								{{ description }}
-							</div>
 						</div>
-						<div class="text-collapse-overlay"></div>
 					</div>
 
-					<button class="collapse-toggle text-primary my-2 text-left">Показати повністю</button>
-					<div id="review-list">
-						{{ reviews }}
-					</div>
+					<div class="modal-body">
+						<form id="form-review">
+							<div class="form-item">
+								<input
+									type="text"
+									name="name"
+									placeholder="Ваше ім'я (відображається на сайті)"
+									value="{{ customer_name }}"
+									id="input-name"
+									class="input"
+								/>
+							</div>
+							<div class="form-item">
+								<textarea name="text" placeholder="Введіть коментар" rows="5" id="input-review" class="input"></textarea>
+							</div>
+							<div class="form-item">
+								<label class="form-label">{{ entry_rating }}</label>
 
-					{# MODAL #}
+								<div class="mt-2 flex items-center gap-1" data-rating>
+									{% for i in 1..5 %}
+										<button
+											type="button"
+											class="rating-star text-gray-300 transition hover:text-orange-500"
+											data-value="{{ i }}"
+											aria-label="Rating {{ i }}"
+										>
+											<svg class="size-6" viewBox="0 0 24 24" fill="currentColor">
+												<use href="/assets/icons/sprite.svg#lucide-star"></use>
+											</svg>
+										</button>
+									{% endfor %}
+								</div>
 
-					<div class="modal" data-modal>
-						<div class="modal-content">
-							<div class="modal-header mb-2">
-								<h2 class="modal-title">Додати відгук</h2>
-								<button class="button-secondary" type="button" data-type="icon" data-modal-close>
-									<svg aria-hidden="true" viewbox="0 0 24 24">
-										<use href="/assets/icons/sprite.svg#icon-close"></use>
-									</svg>
+								<input type="hidden" name="rating" id="input-rating" value="0" />
+							</div>
+
+							<div class="form-item">
+								<button type="button" id="button-review" data-loading-text="{{ text_loading }}" class="button-primary">
+									{{ button_continue }}
 								</button>
 							</div>
-							<div class="flex gap-1">
-								<img src="{{ thumb }}" alt="{{ heading_title }}" class="max-h-[52px]" />
-								<div>
-									<h1 class="heading-3">{{ heading_title }}</h1>
-									<p class="text-primary">
-										{{ author }}
-									</p>
-								</div>
-							</div>
-
-							<div class="modal-body">
-								{# modal AK #}
-								<form id="form-review">
-									<div class="form-item">
-										<input
-											type="text"
-											name="name"
-											placeholder="Ваше ім'я (відображається на сайті)"
-											value="{{ customer_name }}"
-											id="input-name"
-											class="input"
-										/>
-									</div>
-									<div class="form-item">
-										<textarea name="text" placeholder="Введіть коментар" rows="5" id="input-review" class="input"></textarea>
-									</div>
-
-									{# rating #}
-									<div class="form-item">
-										<label class="form-label">{{ entry_rating }}</label>
-
-										<div class="mt-2 flex items-center gap-1" data-rating>
-											{% for i in 1..5 %}
-												<button
-													type="button"
-													class="rating-star text-gray-300 transition hover:text-orange-500"
-													data-value="{{ i }}"
-													aria-label="Rating {{ i }}"
-												>
-													<svg class="size-6" viewBox="0 0 24 24" fill="currentColor">
-														<use href="/assets/icons/sprite.svg#lucide-star"></use>
-													</svg>
-												</button>
-											{% endfor %}
-										</div>
-
-										<input type="hidden" name="rating" id="input-rating" value="0" />
-									</div>
-									{# rating #}
-
-									<div class="form-item">
-										<button type="button" id="button-review" data-loading-text="{{ text_loading }}" class="button-primary">
-											{{ button_continue }}
-										</button>
-									</div>
-								</form>
-
-								{# modal AK #}
-							</div>
-							{# <div class="modal-footer">
-								<button class="button-primary" data-modal-close>Close</button>
-							</div> #}
-						</div>
-					</div>
-					<div class="modal-overlay" data-modal-overlay></div>
-
-					<div class="button-primary mb-4" type="button" data-modal-open="[data-modal]">
-						Залишити відгук
-					</div>
-
-					{# MODAL #}
-				</div>
-			</section>
-
-			<section class="w-full lg:w-1/4" aria-label="Side">
-				<div class="sticky top-[95px] flex flex-col gap-2">
-					<p>
-						{{ price }}
-					</p>
-					<div class="form-item">
-						<label class="form-label" for="input-quantity">{{ entry_qty }}</label>
-						<input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="input" />
-						<input type="hidden" name="product_id" value="{{ product_id }}" />
-						<button class="button-primary">
-							<svg aria-hidden="true" viewbox="0 0 24 24">
-								<use href="/assets/icons/sprite.svg#icon-cart"></use>
-							</svg>
-							{{ button_cart }}
-						</button>
-						{% if minimum > 1 %}
-							<div class="form-message">
-								{{ text_minimum }}
-							</div>
-						{% endif %}
+						</form>
 					</div>
 				</div>
-			</section>
-		</div>
-
-		<section class="text-block" aria-label="Description"></section>
-
-		<hr class="divider" />
-
-		{# <section aria-label="Attributes">
-																																																																																																											<table class="table table-bordered">
-																																																																																																												{% for attribute_group in attribute_groups %}
-																																																																																																													<thead>
-																																																																																																														<tr>
-																																																																																																															<td colspan="2">
-																																																																																																																<strong>{{ attribute_group.name }}</strong>
-																																																																																																															</td>
-																																																																																																														</tr>
-																																																																																																													</thead>
-																																																																																																													<tbody>
-																																																																																																														{% for attribute in attribute_group.attribute %}
-																																																																																																															<tr>
-																																																																																																																<td>{{ attribute.name }}</td>
-																																																																																																																<td>{{ attribute.text }}</td>
-																																																																																																															</tr>
-																																																																																																														{% endfor %}
-																																																																																																													</tbody>
-																																																																																																												{% endfor %}
-																																																																																																											</table>
-																																																																																																										</section> #}
-
-		<hr class="divider" />
-
-		<section aria-label="Reviews"></section>
-
-		<section aria-label="Related">
+			</div>
+		</section>
+	</div>
+	{# <section aria-label="Related">
 			<h2>{{ text_related }}</h2>
 			<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
 				{% for product in products %}
 					{% include "tailwind/components/product-card.twig" with { product: product } %}
 				{% endfor %}
 			</div>
-		</section>
+		</section> #}
 
-		<section aria-label="Tags">
-			{% if tags %}
-				<p>
-					{{ text_tags }}
-					{% for i in 0..(tags | length) - 1 %}
-						{% if i < (tags | length) - 1 %}
-							<a href="{{ tags[i].href }}">{{ tags[i].tag }}</a>,
-						{% else %}
-							<a href="{{ tags[i].href }}">{{ tags[i].tag }}</a>
-						{% endif %}
-					{% endfor %}
-				</p>
-			{% endif %}
-		</section>
-
-		{{ content_bottom }}
-	</main>
-	{{ column_right }}
+	{{ content_bottom }}
 </div>
 <script>
 	document.addEventListener('DOMContentLoaded', () => {

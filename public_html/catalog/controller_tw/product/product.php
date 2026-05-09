@@ -162,7 +162,6 @@ class ControllerProductProduct extends Controller
 		$this->load->model('catalog/product');
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);
-
 		if ($product_info) {
 			$url = '';
 
@@ -259,7 +258,7 @@ class ControllerProductProduct extends Controller
 			$data['reward'] = $product_info['reward'];
 			$data['points'] = $product_info['points'];
 			$data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
-
+			$data['quantity'] = (int)$product_info['quantity'];
 			$data['author'] = $this->model_catalog_product->getProductAttributeValue($product_id, 12);
 			$data['publisher'] = $this->model_catalog_product->getProductAttributeValue($product_id, 13);
 			$data['language'] = $this->model_catalog_product->getProductAttributeValue($product_id, 14);

@@ -462,7 +462,7 @@
 	}
 
 	.breadcrumbs-current {
-		@apply font-medium text-neutral-900 dark:text-white;
+		@apply text-ellipsis whitespace-nowrap font-medium text-neutral-900;
 	}
 
 	/* BREADCRUMBS */
