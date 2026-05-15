@@ -1,12 +1,33 @@
-<div class="container mx-auto px-2">
+<div class="container mx-auto px-3.5">
 	<div class="grid gap-x-4 lg:grid-cols-[1fr_2fr_1fr]">
 		<section class="order-1 lg:col-start-1 lg:row-span-3" aria-label="Image">
-			<div class="sticky top-[95px] flex flex-col">
-				<img class="max-h-[356px] object-contain" src="{{ thumb }}" alt="{{ heading_title }}" />
-				<div class="flex gap-2">
+			<div class="sticky top-[95px] flex flex-col overflow-hidden">
+				<div id="product-gallery" class="carousel overflow-hidden">
+					<div class="carousel-track">
+						<div class="carousel-slide flex w-full shrink-0 justify-center">
+							<img class="max-h-[356px] object-contain" src="{{ thumb }}" alt="{{ heading_title }}" />
+						</div>
+
+						{% if images %}
+							{% for image in images %}
+								<div class="carousel-slide flex w-full shrink-0 justify-center">
+									<img class="max-h-[356px] object-contain" src="{{ image.popup ? : image.thumb }}" alt="{{ heading_title }}" />
+								</div>
+							{% endfor %}
+						{% endif %}
+					</div>
+				</div>
+
+				<div id="product-thumbs" class="mt-2 flex gap-1 overflow-x-auto p-2">
+					<button type="button" class="gallery-thumb border-primary shrink-0 rounded-lg border p-1" data-index="0">
+						<img class="h-15 object-contain" src="{{ thumb }}" alt="{{ heading_title }}" />
+					</button>
+
 					{% if images %}
 						{% for image in images %}
-							<img src="{{ image.thumb }}" alt="{{ heading_title }}" />
+							<button type="button" class="gallery-thumb shrink-0 rounded-lg border border-gray-400 p-1" data-index="{{ loop.index }}">
+								<img class="h-15 object-contain" src="{{ image.thumb }}" alt="{{ heading_title }}" />
+							</button>
 						{% endfor %}
 					{% endif %}
 				</div>
@@ -18,7 +39,7 @@
 		</section>
 
 		<section class="order-3 lg:col-start-3 lg:row-span-3" aria-label="Buy">
-			<div class="sticky top-[95px] flex flex-col gap-2">
+			<div class="sticky top-[95px] flex flex-col gap-2 max-lg:pt-4">
 				<p class="heading-3">
 					{{ price }}
 				</p>
@@ -38,10 +59,12 @@
 							Не в наявності
 						</p>
 					{% endif %}
-					<span class="text-gray-600">•</span>
-					<p class="text-sm text-gray-600">
-						Паперова книга
-					</p>
+					{% if book %}
+						<span class="text-gray-600">•</span>
+						<p class="text-sm text-gray-600">
+							Паперова книга
+						</p>
+					{% endif %}
 				</div>
 				{% if quantity >= 1 %}
 					<button class="button-primary">
@@ -52,11 +75,98 @@
 				{% else %}
 					<button class="button-secondary border border-gray-400" disabled>Немає в наявності</button>
 				{% endif %}
+				<div class="mt-2 flex flex-col gap-1 max-lg:hidden">
+					<p class="text-md pb-1 font-bold">
+						Доставка
+					</p>
+					<div class="py-1 text-sm">
+						<div class="flex items-center gap-1">
+							<svg aria-hidden="true" height="14" width="14" viewbox="0 0 12 16">
+								<use href="/assets/icons/sprite.svg#icon-meest"></use>
+							</svg>
+							<p>
+								Meest
+							</p>
+						</div>
+						<p class="font-bold">
+							Відправимо завтра
+						</p>
+					</div>
+					<hr class="divider" />
+					<div class="py-1 text-sm">
+						<div class="flex items-center gap-1">
+							<svg aria-hidden="true" height="14" width="14" viewbox="0 0 333 317">
+								<use href="/assets/icons/sprite.svg#icon-ukrp" fill="#FFBE0C"></use>
+							</svg>
+							<p>
+								Укрпошта
+							</p>
+						</div>
+						<p class="font-bold">
+							Відправимо завтра
+						</p>
+					</div>
+					<hr class="divider" />
+					<div class="py-1 text-sm">
+						<div class="flex items-center gap-1">
+							<svg aria-hidden="true" height="14" width="14" viewbox="0 0 16 16">
+								<use href="/assets/icons/sprite.svg#icon-novaposhta"></use>
+							</svg>
+							<p>
+								Нова пошта
+							</p>
+						</div>
+						<p class="font-bold">
+							Відправимо завтра
+						</p>
+					</div>
+					<hr class="divider" />
+					<div class="py-1 text-sm">
+						<div class="flex items-center gap-1">
+							<svg class="text-primary" aria-hidden="true" height="14" width="14" viewbox="0 0 16 16">
+								<use href="/assets/icons/sprite.svg#lucide-store"></use>
+							</svg>
+							<p>
+								Самовивіз
+							</p>
+						</div>
+						<p class="font-bold">
+							Без вихідних!
+						</p>
+					</div>
+				</div>
+				{# <div class="mt-2 flex flex-col gap-1">
+					<p class="text-md pb-1 font-bold">
+						Варіанти оплати
+					</p>
+
+					<div class="py-1 text-sm">
+						<div class="flex items-center gap-1">
+							<svg class="text-primary" aria-hidden="true" height="16" width="16" viewbox="0 0 12 16">
+								<use href="/assets/icons/sprite.svg#lucide-credit-card"></use>
+							</svg>
+							<p>
+								Оплата карткою онлайн (LiqPay)
+							</p>
+						</div>
+					</div>
+					<hr class="divider" />
+					<div class="py-1 text-sm">
+						<div class="flex items-center gap-1">
+							<svg class="text-primary" aria-hidden="true" height="16" width="16" viewbox="0 0 12 16">
+								<use href="/assets/icons/sprite.svg#lucide-circle-dollar-sign"></use>
+							</svg>
+							<p>
+								Накладений платіж
+							</p>
+						</div>
+					</div>
+				</div> #}
 			</div>
 		</section>
 
 		<section class="order-4 lg:col-start-2 lg:row-start-2" aria-label="Title">
-			<div class="flex flex-col">
+			<div class="flex flex-col max-lg:pt-4">
 				<h1 class="heading-2">{{ heading_title }}</h1>
 				<p class="text-primary">
 					{{ author }}
@@ -191,7 +301,7 @@
 									{% for i in 1..5 %}
 										<button
 											type="button"
-											class="rating-star text-gray-300 transition hover:text-orange-500"
+											class="rating-star cursor-pointer text-gray-300 transition hover:text-orange-500"
 											data-value="{{ i }}"
 											aria-label="Rating {{ i }}"
 										>
@@ -300,5 +410,33 @@
 				},
 			});
 		});
+
+		const galleryNode = document.getElementById('product-gallery');
+
+		if (galleryNode) {
+			const gallery = EmblaCarousel(galleryNode, {
+				loop: true,
+			});
+
+			const thumbs = document.querySelectorAll('.gallery-thumb');
+
+			const syncThumbs = () => {
+				const selected = gallery.selectedScrollSnap();
+
+				thumbs.forEach((thumb, index) => {
+					thumb.classList.toggle('border-primary', index === selected);
+					thumb.classList.toggle('border-gray-400', index !== selected);
+				});
+			};
+
+			thumbs.forEach((thumb) => {
+				thumb.addEventListener('click', () => {
+					gallery.scrollTo(Number(thumb.dataset.index));
+				});
+			});
+
+			gallery.on('select', syncThumbs);
+			syncThumbs();
+		}
 	});
 </script>

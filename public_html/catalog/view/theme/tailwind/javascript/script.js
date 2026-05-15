@@ -21,28 +21,111 @@ function toggleTheme() {
 }
 
 // Theme
+function isTouchDevice() {
+	return window.matchMedia('(hover: none), (pointer: coarse)').matches;
+}
 
 // Dropdown
 
-$('#dropdownButton, .dropdown-button').on('click', function (e) {
-	e.stopPropagation();
+function isTouchDevice() {
+	return window.matchMedia('(hover: none), (pointer: coarse)').matches;
+}
 
-	const $button = $(this);
-	const $menu = $button.closest('.dropdown').find('.dropdown-menu');
+let dropdownCloseTimer = null;
+
+function openDropdown($dropdown) {
+	const $menu = $dropdown.find('.dropdown-menu');
+
+	clearTimeout(dropdownCloseTimer);
+
+	$('.dropdown-menu').not($menu).removeClass('show');
+	$menu.addClass('show');
+}
+
+function closeDropdown($dropdown) {
+	const $menu = $dropdown.find('.dropdown-menu');
+
+	dropdownCloseTimer = setTimeout(function () {
+		$menu.removeClass('show');
+	}, 150);
+}
+
+$(document).on('click', '[data-dropdown-button]', function (e) {
+	const $dropdown = $(this).closest('.dropdown');
+	const $menu = $dropdown.find('.dropdown-menu');
+	const type = $dropdown.data('type');
+
+	if (type === 'hover' && !isTouchDevice()) {
+		return;
+	}
+
+	e.stopPropagation();
 
 	$('.dropdown-menu').not($menu).removeClass('show');
 	$menu.toggleClass('show');
+});
+
+$(document).on('mouseenter', '.dropdown[data-type="hover"]', function () {
+	if (isTouchDevice()) return;
+
+	openDropdown($(this));
+});
+
+$(document).on('mouseleave', '.dropdown[data-type="hover"]', function () {
+	if (isTouchDevice()) return;
+
+	closeDropdown($(this));
+});
+
+$(document).on('mouseenter', '.dropdown-menu', function () {
+	clearTimeout(dropdownCloseTimer);
 });
 
 $(document).on('click', function () {
 	$('.dropdown-menu').removeClass('show');
 });
 
-$('.dropdown-menu').on('click', function (e) {
+$(document).on('click', '.dropdown-menu', function (e) {
 	e.stopPropagation();
 });
 
 // Dropdown
+
+// collapsible
+
+document.querySelectorAll('[data-collapsible]').forEach((wrapper) => {
+	const content = wrapper.querySelector('[data-collapsible-content]');
+	const btn = wrapper.querySelector('.collapse-toggle');
+
+	if (!content || !btn) return;
+
+	const collapsedHeight = 80;
+	let expanded = false;
+
+	// фиксируем начальное состояние
+	content.style.maxHeight = collapsedHeight + 'px';
+
+	// показываем кнопку только если есть переполнение
+	const isOverflowing = content.scrollHeight > collapsedHeight;
+
+	if (!isOverflowing) {
+		btn.style.display = 'none';
+		return;
+	}
+
+	btn.addEventListener('click', () => {
+		expanded = !expanded;
+
+		if (expanded) {
+			content.style.maxHeight = content.scrollHeight + 'px';
+			btn.textContent = 'Згорнути';
+		} else {
+			content.style.maxHeight = collapsedHeight + 'px';
+			btn.textContent = 'Показати більше';
+		}
+	});
+});
+// collapsible
 
 // Utils
 
@@ -330,35 +413,35 @@ function closeMenu() {
 
 // Menu
 
-// dropdown
+// // dropdown
 
-document.querySelectorAll('[data-type="hover"]').forEach(function (wrapper) {
-	const panel = wrapper.querySelector('[data-panel]');
+// document.querySelectorAll('[data-type="hover"]').forEach(function (wrapper) {
+// 	const panel = wrapper.querySelector('[data-panel]');
 
-	const open = () => {
-		panel.classList.remove('opacity-0', 'scale-y-90', 'pointer-events-none');
-		panel.classList.add('opacity-100', 'scale-y-100');
-	};
+// 	const open = () => {
+// 		panel.classList.remove('opacity-0', 'scale-y-90', 'pointer-events-none');
+// 		panel.classList.add('opacity-100', 'scale-y-100');
+// 	};
 
-	const close = () => {
-		panel.classList.add('opacity-0', 'scale-y-90', 'pointer-events-none');
-		panel.classList.remove('opacity-100', 'scale-y-100');
-	};
+// 	const close = () => {
+// 		panel.classList.add('opacity-0', 'scale-y-90', 'pointer-events-none');
+// 		panel.classList.remove('opacity-100', 'scale-y-100');
+// 	};
 
-	// Desktop — hover
-	wrapper.addEventListener('mouseenter', open);
-	wrapper.addEventListener('mouseleave', close);
+// 	// Desktop — hover
+// 	wrapper.addEventListener('mouseenter', open);
+// 	wrapper.addEventListener('mouseleave', close);
 
-	// Mobile — click
-	wrapper.addEventListener('click', function (e) {
-		const isOpen = !panel.classList.contains('opacity-0');
-		isOpen ? close() : open();
-		e.stopPropagation();
-	});
+// 	// Mobile — click
+// 	wrapper.addEventListener('click', function (e) {
+// 		const isOpen = !panel.classList.contains('opacity-0');
+// 		isOpen ? close() : open();
+// 		e.stopPropagation();
+// 	});
 
-	// Закрыть при клике мимо
-	document.addEventListener('click', close);
-});
+// 	// Закрыть при клике мимо
+// 	document.addEventListener('click', close);
+// });
 
 // search
 

@@ -34,19 +34,19 @@
 					<svg>
 						<use href="/assets/icons/sprite.svg#lucide-filter"></use>
 					</svg>Фільтр
-				</button>
-
-				<div class="dropdown flex-1 basis-0" data-align="center">
-					<button id="dropdownButton" data-size="small" class="button-secondary w-full border border-neutral-300">
+				</button><div class="dropdown flex-1 basis-0" data-type="click" data-align="center">
+					<button data-dropdown-button class="button-secondary w-full border border-neutral-300">
 						<svg class="rotate-90">
 							<use href="/assets/icons/sprite.svg#lucide-arrow-left-right"></use>
 						</svg>
 						{{ text_sort }}
 					</button>
 
-					<div id="dropdownMenu" class="dropdown-menu">
+					<div class="dropdown-menu">
 						{% for sort in sorts %}
-							<button class="dropdown-item" onclick="location = '{{ sort.href }}'">{{ sort.text }}</button>
+							<button class="dropdown-item w-full px-3 py-2 text-left hover:bg-neutral-100" onclick="location = '{{ sort.href }}'">
+								{{ sort.text }}
+							</button>
 						{% endfor %}
 					</div>
 				</div>

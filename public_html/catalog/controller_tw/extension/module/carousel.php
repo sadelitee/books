@@ -1,12 +1,14 @@
 <?php
-class ControllerExtensionModuleCarousel extends Controller {
-	public function index($setting) {
+class ControllerExtensionModuleCarousel extends Controller
+{
+	public function index($setting)
+	{
 		static $module = 0;
 
 		$this->load->model('design/banner');
 		$this->load->model('tool/image');
-		
-		$this->document->addScript('https://unpkg.com/embla-carousel/embla-carousel.umd.js');
+
+		$this->document->addScript('catalog/view/theme/tailwind/javascript/embla.js');
 
 		$data['banners'] = array();
 

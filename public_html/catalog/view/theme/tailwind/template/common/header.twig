@@ -1,21 +1,22 @@
 <header class="header">
-	<div class="container flex mx-auto justify-between items-center">
-		{% if 'common/home' == route %}
-			<img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" style="height:40px"/>
+	<div class="container mx-auto flex items-center justify-between">
+		{% if "common/home" == route %}
+			<img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" style="height:40px" />
 		{% else %}
-			<a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" style="height:40px" alt="{{ name }}"/></a>
+			<a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" style="height:40px" alt="{{ name }}" /></a>
 		{% endif %}
-
 
 		{# <button class="flex flex-wrap items-center gap-2 px-4 py-2 text-sm rounded-lg cursor-pointer" onclick="openMenu()"> #}
 		<button class="button-primary mx-3" onclick="openMenu()">
-			<svg aria-hidden="true" class="w-4 h-4 max-md:hidden" viewbox="0 0 24 24">
+			<svg aria-hidden="true" class="h-4 w-4 max-md:hidden" viewbox="0 0 24 24">
 				<use href="/assets/icons/sprite.svg#icon-menu"></use>
 			</svg>
-			<p>Каталог</p>
+			<p>
+				Каталог
+			</p>
 		</button>
 
-		<div class="flex items-center gap-2 flex-1">
+		<div class="flex flex-1 items-center gap-2">
 			{{ currency }}
 			{{ language }}
 			{{ search }}
@@ -23,41 +24,45 @@
 				<svg aria-hidden="true" viewbox="0 0 24 24">
 					<use href="/assets/icons/sprite.svg#icon-user"></use>
 				</svg>
-				<p>Увійти</p>
+				<p>
+					Увійти
+				</p>
 			</a>
-
-			<div data-type="hover" class="relative inline-block group max-md:hidden">
-
-				<button data-type="hover" class="button-secondary px-3">
-					<svg class="w-5 h-5 flex-shrink-0" viewbox="0 0 24 24" fill="none">
+			<div class="dropdown" data-type="hover">
+				<button data-dropdown-button class="dropdown-button button-secondary px-3">
+					<svg class="h-5 w-5 flex-shrink-0" viewbox="0 0 24 24" fill="none">
 						<use href="/assets/icons/sprite.svg#icon-phone"></use>
 					</svg>
-					<p>Зв'язатися з нами</p>
-					<svg class="w-5 h-5 flex-shrink-0" viewbox="0 0 24 24" fill="none">
+					<p>
+						Зв'язатися з нами
+					</p>
+					<svg class="h-5 w-5 flex-shrink-0" viewbox="0 0 24 24" fill="none">
 						<use href="/assets/icons/sprite.svg#icon-caret-down"></use>
 					</svg>
 				</button>
 
-				<div
-					data-panel class="absolute top-full left-1/2 -translate-x-1/2 w-56 bg-white border border-gray-200 rounded-xl py-1 z-10 opacity-0 scale-y-90 origin-top pointer-events-none transition-all duration-150 ease-out">
-					{# Phone #}
-					<div class="px-4 py-3 border-b border-gray-100">
+				<div class="dropdown-menu">
+					<div class="border-b border-gray-100 px-4 py-3">
 						<a href="tel:+380671737379" class="flex items-center gap-2 text-gray-800">
 							<div>
-								<p class="text-sm font-medium">+ (067) 173 7379</p>
+								<p class="text-sm font-medium">
+									+ (067) 173 7379
+								</p>
 							</div>
 						</a>
-						<p class="text-xs text-gray-400">Без вихідних</p>
+						<p class="text-xs text-gray-400">
+							Без вихідних
+						</p>
 					</div>
-					{# Instagram #}
-					<div class="px-4 py-2.5 text-sm text-gray-800 border-b border-gray-100 hover:bg-gray-50">
+
+					<div class="border-b border-gray-100 px-4 py-2.5 text-sm text-gray-800 hover:bg-gray-50">
 						<a class="flex items-center gap-1" href="https://www.instagram.com/store.booklover/" target="_blank">
-							<svg class="w-5 h-5 flex-shrink-0" viewbox="0 0 24 24" fill="none">
+							<svg class="h-5 w-5 flex-shrink-0" viewbox="0 0 24 24" fill="none">
 								<defs>
 									<linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
-										<stop offset="0%" stop-color="#f9ce34"/>
-										<stop offset="50%" stop-color="#ee2a7b"/>
-										<stop offset="100%" stop-color="#6228d7"/>
+										<stop offset="0%" stop-color="#f9ce34" />
+										<stop offset="50%" stop-color="#ee2a7b" />
+										<stop offset="100%" stop-color="#6228d7" />
 									</linearGradient>
 								</defs>
 								<g stroke="url(#ig-grad)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -65,19 +70,23 @@
 									<path d="M16 11.37A4 4 0 1 1 12.63 8A4 4 0 0 1 16 11.37m1.5-4.87h.01"></path>
 								</g>
 							</svg>
-							<p class="inline-block">Instagram</p>
+							<p>
+								Instagram
+							</p>
 						</a>
 					</div>
-					{# Telegram #}
-					<div class="px-4 py-2.5 text-sm text-gray-800 border-b border-gray-100 hover:bg-gray-50">
-						<a class="flex items-center gap-1" href="https://t.me/store_booklover" target="_blank"><img src="image/catalog/icons/telegram.svg" class="w-5 h-5 inline-block" alt="Telegram"></img>
-						<p class="inline-block">Telegram</p>
-					</a>
+
+					<div class="px-4 py-2.5 text-sm text-gray-800 hover:bg-gray-50">
+						<a class="flex items-center gap-1" href="https://t.me/store_booklover" target="_blank">
+							<img src="image/catalog/icons/telegram.svg" class="h-5 w-5" alt="Telegram" />
+							<p>
+								Telegram
+							</p>
+						</a>
+					</div>
 				</div>
-
 			</div>
-
+			{{ cart }}
 		</div>
-		{{ cart }}
 	</div>
-</div></header>{{ menu }}
+</header>{{ menu }}

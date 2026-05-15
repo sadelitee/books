@@ -517,16 +517,20 @@
 		@apply relative inline-block text-left;
 	}
 
-	.dropdown-button {
-		@apply rounded-xs flex cursor-pointer items-center justify-center gap-2 bg-white px-6 py-2 text-black transition-colors hover:bg-neutral-200 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700;
+	.dropdown-menu {
+		@apply absolute top-full z-20 mt-2 min-w-full rounded-lg border border-neutral-200 bg-white text-neutral-900 shadow-lg dark:border-neutral-700 dark:bg-neutral-800 dark:text-white;
+
+		@apply pointer-events-none invisible translate-y-1 opacity-0;
+		@apply transition-all duration-150 ease-out;
 	}
 
-	.dropdown-menu {
-		@apply absolute z-20 mt-2 hidden min-w-full rounded-sm border border-neutral-200 bg-white text-neutral-900 shadow-lg dark:border-neutral-700 dark:bg-neutral-800 dark:text-white;
+	.dropdown-menu::before {
+		content: '';
+		@apply absolute -top-2 left-0 right-0 h-2;
 	}
 
 	.dropdown-menu.show {
-		@apply block;
+		@apply pointer-events-auto visible translate-y-0 opacity-100;
 	}
 
 	.dropdown-item {
@@ -545,26 +549,34 @@
 		@apply left-auto right-0;
 	}
 
-	.dropdown-button:disabled,
-	.dropdown-button.disabled,
-	.dropdown-button[aria-disabled='true'] {
-		@apply cursor-not-allowed bg-neutral-100 text-neutral-400 dark:bg-neutral-700 dark:text-neutral-500;
-		pointer-events: none;
-	}
-
-	.dropdown-item:disabled,
-	.dropdown-item.disabled,
-	.dropdown-item[aria-disabled='true'] {
-		@apply cursor-not-allowed text-neutral-400 hover:bg-transparent dark:text-neutral-500;
-		pointer-events: none;
-	}
-
 	/* DROPDOWN */
+
+	/* Collapsible */
+
+	.reviews-wrapper {
+		position: relative;
+	}
+
+	.reviews-fade {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 80px;
+		background: linear-gradient(to bottom, transparent, white);
+		pointer-events: none;
+	}
+
+	.reviews-wrapper.is-open .reviews-fade {
+		display: none;
+	}
+
+	/* Collapsible */
 
 	/* MENU */
 
 	.menu-link {
-		@apply rounded-xs cursor-pointer bg-white p-2 text-black transition-colors hover:bg-neutral-200 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700;
+		@apply cursor-pointer rounded-lg bg-white p-2 text-black transition-colors hover:bg-neutral-200 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700;
 	}
 
 	/* MENU */
