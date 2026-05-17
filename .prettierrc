@@ -21,7 +21,7 @@
                 "twigAlwaysBreakObjects": false,
                 "twigFollowOfficialCodingStandards": false,
                 "twigOutputEndblockName": false,
-                "printWidth": 160
+                "printWidth": 200
             }
         }
     ]

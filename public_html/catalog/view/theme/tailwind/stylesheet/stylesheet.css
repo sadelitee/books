@@ -177,7 +177,7 @@
 	/* BADGES */
 
 	.badge {
-		@apply pointer-events-none inline-flex h-5 min-w-5 select-none items-center justify-center rounded-full bg-red-600 px-1 text-[12px] font-semibold leading-none text-white;
+		@apply pointer-events-none inline-flex h-5 min-w-5 select-none items-center justify-center rounded-full border border-neutral-200 bg-red-600 px-1 text-[12px] font-semibold leading-none text-white shadow-sm;
 	}
 
 	.badge:empty {
@@ -188,8 +188,16 @@
 		@apply bg-primary-500;
 	}
 
+	.badge[data-variant='secondary'] {
+		@apply bg-neutral-100 text-neutral-900;
+	}
+
 	.badge[data-size='small'] {
 		@apply h-4 w-4 min-w-4 pb-0.5 text-[11px];
+	}
+
+	.badge[data-size='large'] {
+		@apply rounded-lg px-4 py-4 text-sm;
 	}
 
 	/* BADGES */
@@ -629,6 +637,25 @@
 	}
 
 	/* COLLAPSE TEXT */
+
+	/* description */
+	.description-content {
+		position: relative;
+		max-height: 110px;
+		overflow: hidden;
+
+		-webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+		mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+		transition: max-height 0.25s ease;
+	}
+
+	.description-collapse.is-expanded .description-content {
+		max-height: 2000px;
+
+		-webkit-mask-image: none;
+		mask-image: none;
+	}
+	/* description */
 
 	/* FROM  */
 

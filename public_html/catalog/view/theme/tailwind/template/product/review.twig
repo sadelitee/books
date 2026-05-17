@@ -16,17 +16,20 @@
 
 				<!-- TEXT COLLAPSIBLE -->
 				<div class="review-text-wrapper" data-collapsible>
-					<div class="review-text-content" data-collapsible-content style="max-height: 80px; overflow: hidden;">
+					<div class="review-text-content line-clamp-3" data-collapsible-content>
 						<p class="text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
 							{{ review.text }}
 						</p>
 					</div>
 
-					<button type="button" class="collapse-toggle mt-2 text-primary flex items-center gap-1">
+					<button
+						type="button"
+						class="collapse-toggle cursor-pointer mt-2 hidden items-center gap-1 text-primary"
+						data-collapsible-toggle
+					>
 						Показати більше
 					</button>
 				</div>
-
 				<!-- STARS -->
 				<div class="mt-3 flex items-center gap-1">
 					{% for i in 1..5 %}

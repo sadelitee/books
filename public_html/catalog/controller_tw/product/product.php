@@ -10,8 +10,6 @@ class ControllerProductProduct extends Controller
 	{
 		$this->load->language('product/product');
 
-		$this->document->addScript('catalog/view/theme/tailwind/javascript/embla.js');
-
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -262,11 +260,31 @@ class ControllerProductProduct extends Controller
 			$data['points'] = $product_info['points'];
 			$data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
 			$data['quantity'] = (int)$product_info['quantity'];
-			$data['author'] = $this->model_catalog_product->getProductAttributeValue($product_id, 12);
-			$data['publisher'] = $this->model_catalog_product->getProductAttributeValue($product_id, 13);
-			$data['language'] = $this->model_catalog_product->getProductAttributeValue($product_id, 14);
-			$data['cover_type'] = $this->model_catalog_product->getProductAttributeValue($product_id, 15);
-			$data['book'] = !empty($data['cover_type']);
+
+			$data['book_attributes'] = [];
+
+			$data['book_attributes'][] = [
+				'name'  => 'Автор',
+				'value' => $this->model_catalog_product->getProductAttributeValue($product_id, 12),
+			];
+
+			$data['book_attributes'][] = [
+				'name'  => 'Видавництво',
+				'value' => $this->model_catalog_product->getProductAttributeValue($product_id, 13),
+			];
+
+			$data['book_attributes'][] = [
+				'name'  => 'Мова',
+				'value' => $this->model_catalog_product->getProductAttributeValue($product_id, 14),
+			];
+
+			$data['book_attributes'][] = [
+				'name'  => 'Тип обкладинки',
+				'value' => $this->model_catalog_product->getProductAttributeValue($product_id, 15),
+			];
+
+			$data['book'] = !empty($data['book_attributes'][3]['value']);
+
 
 			if ($product_info['quantity'] <= 0) {
 				$data['stock'] = $product_info['stock_status'];
@@ -300,6 +318,12 @@ class ControllerProductProduct extends Controller
 					'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_height'))
 				);
 			}
+
+
+			if ($data['images']) {
+				$this->document->addScript('catalog/view/theme/tailwind/javascript/embla.js');
+			}
+
 
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 				$data['price'] = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
