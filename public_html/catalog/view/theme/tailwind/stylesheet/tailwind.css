@@ -2536,9 +2536,15 @@
     position: relative;
     max-height: 110px;
     overflow: hidden;
+    transition-property: max-height;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+    --tw-duration: 300ms;
+    transition-duration: 300ms;
+    --tw-ease: var(--ease-in-out);
+    transition-timing-function: var(--ease-in-out);
     -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
     mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
-    transition: max-height 0.25s ease;
   }
   .description-collapse.is-expanded .description-content {
     max-height: 2000px;
